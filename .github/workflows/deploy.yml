@@ -32,12 +32,10 @@ jobs:
           tags: tag:ci
 
       - name: Deploy to VPS
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: 100.98.19.7
-          username: blog
-          key: ${{ secrets.DEPLOY_SSH_KEY }}
-          source: dist/
-          target: /var/www/pivoshenko.dev
-          strip_components: 1
-          rm: true
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            dist/ blog@100.98.19.7:/var/www/pivoshenko.dev/
