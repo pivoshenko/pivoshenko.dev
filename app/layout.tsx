@@ -1,11 +1,11 @@
-import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
-import { ThemeProvider } from 'next-themes'
+import { Footer } from '@/components/footer'
+import { Nav } from '@/components/nav'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import { Nav } from '@/components/nav'
-import { Footer } from '@/components/footer'
+import { GeistMono } from 'geist/font/mono'
+import { GeistSans } from 'geist/font/sans'
+import type { Metadata } from 'next'
+import { ThemeProvider } from 'next-themes'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -15,6 +15,11 @@ export const metadata: Metadata = {
   },
   description:
     'Personal blog on software engineering, distributed systems, and developer tooling.',
+  alternates: {
+    types: {
+      'application/rss+xml': 'https://pivoshenko.dev/rss.xml',
+    },
+  },
 }
 
 export default function RootLayout({
@@ -28,11 +33,11 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${GeistSans.variable} ${GeistMono.variable}`}
     >
-      <body className="bg-stone-50 text-stone-900 dark:bg-[#0c0a09] dark:text-stone-100 font-sans antialiased">
+      <body className="bg-stone-50 text-stone-900 dark:bg-black dark:text-stone-100 font-sans antialiased">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="min-h-screen flex flex-col">
             <Nav />
-            <main className="flex-1 w-full max-w-2xl mx-auto px-4 py-12">
+            <main className="flex-1 w-full max-w-3xl mx-auto px-4 py-6">
               {children}
             </main>
             <Footer />

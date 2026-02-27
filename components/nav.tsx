@@ -14,13 +14,13 @@ export function Nav() {
   const pathname = usePathname()
 
   return (
-    <header className="w-full border-b border-stone-200 dark:border-stone-800">
-      <nav className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
+    <header className="w-full border-b border-ui">
+      <nav className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link
           href="/"
-          className="text-sm font-semibold text-stone-900 dark:text-stone-100 hover:opacity-60 transition-opacity font-mono tracking-tight"
+          className="type-logo fg-primary hover:opacity-60 transition-opacity"
         >
-          vp
+          Volodymyr Pivoshenko
         </Link>
 
         <div className="flex items-center">
@@ -33,16 +33,15 @@ export function Nav() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-3 py-1.5 text-sm rounded transition-colors ${isActive
-                    ? 'text-stone-900 dark:text-stone-100'
-                    : 'text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100'
-                  }`}
+                className={`type-ui px-3 py-1.5 rounded transition-colors ${
+                  isActive ? 'fg-primary' : 'fg-subtle hover-primary'
+                }`}
               >
                 {link.label}
               </Link>
             )
           })}
-          <div className="ml-1 pl-1 border-l border-stone-200 dark:border-stone-800">
+          <div className="ml-1 pl-1 border-l border-ui">
             <ThemeToggle />
           </div>
         </div>

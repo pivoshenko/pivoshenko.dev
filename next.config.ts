@@ -1,19 +1,10 @@
-import createMDX from '@next/mdx'
-import remarkGfm from 'remark-gfm'
 import type { NextConfig } from 'next'
 
-const nextConfig: NextConfig = {
+const config: NextConfig = {
   pageExtensions: ['ts', 'tsx', 'mdx'],
   eslint: {
     ignoreDuringBuilds: true,
   },
 }
 
-const withMDX = createMDX({
-  options: {
-    remarkPlugins: [[remarkGfm]],
-    rehypePlugins: [],
-  },
-})
-
-export default withMDX(nextConfig)
+export default config
