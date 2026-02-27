@@ -1,0 +1,44 @@
+---
+title: What Good Developer Experience Actually Looks Like
+date: 2025-03-10
+description: DX is not about tools and dashboards. It's about reducing the cognitive load of shipping software.
+tags: [platform, devops, dx]
+---
+
+There's a lot of noise around "developer experience" right now. Every platform team is building an internal developer portal. Every tool vendor is promising to solve DX. Most of it misses the point.
+
+Good developer experience isn't about the number of dashboards you have or whether your CI pipeline has a pretty UI. It's about reducing the cognitive load of shipping software so engineers can focus on the work that matters.
+
+## The right metric
+
+The question to ask isn't "do engineers like our tools?" It's: **how long does it take a new engineer to deploy their first change?**
+
+That time captures everything: how hard it is to set up a local environment, how much tribal knowledge is required, how opaque the deployment process is, how fragile the tests are. Compress that time and you've genuinely improved DX.
+
+## Common failure modes
+
+**Self-service that isn't actually self-service.** You build a portal where engineers can "provision resources" but every action requires a ticket, approval, or Slack message to the platform team. That's not self-service. That's self-service theatre.
+
+**Documentation that lives in the wrong place.** If the answer to a question is in Confluence but the question is asked in the terminal, the documentation doesn't exist for practical purposes. Good DX means answers appear where questions arise.
+
+**Abstraction without escape hatches.** Every layer of abstraction you add for simplicity must come with an escape hatch. Engineers will hit edge cases. When they do, they need to be able to drop down to the lower level without filing a ticket.
+
+**Optimizing for the happy path.** Most DX work focuses on making the common case smooth. But engineers spend more time debugging and recovering from failures than on the happy path. A great DX means failures are fast, observable, and actionable.
+
+## What actually moves the needle
+
+**Local parity with production.** If `docker compose up` doesn't give you a faithful approximation of production, every local test is a guess. This is expensive to maintain but enormously valuable.
+
+**Opinionated defaults with visible trade-offs.** Don't make engineers choose between 12 options for observability setup. Give them a working default and document what it costs and when they'd want to change it.
+
+**Failure messages that tell you what to do next.** When something breaks, the error should say what went wrong and what to do about it. "Error: permission denied" is not a failure message. "Error: IAM role `deploy-prod` is missing the `s3:PutObject` permission on `arn:aws:s3:::artifacts-prod/*`. Run `make fix-iam-role` to resolve." is a failure message.
+
+**Fast feedback loops.** Slow tests get skipped. Slow builds get worked around. Fast tests get run constantly and catch bugs early. Speed is a feature.
+
+## The platform team's job
+
+A platform team's job is to make engineers faster without making themselves a bottleneck. Every process that requires the platform team's involvement is a process waiting to be automated or eliminated.
+
+The best platform work is invisible. Engineers ship features. Deployments happen. Things are observable. Nobody notices the platform because there's nothing to notice.
+
+That's the goal.
