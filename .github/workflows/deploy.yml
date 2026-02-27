@@ -31,6 +31,11 @@ jobs:
           oauth-secret: ${{ secrets.TS_OAUTH_CLIENT_SECRET }}
           tags: tag:ci
 
+      - name: Verify Tailscale connectivity
+        run: |
+          tailscale status
+          tailscale ping --c 5 100.98.19.7
+
       - name: Deploy to VPS
         run: |
           mkdir -p ~/.ssh
