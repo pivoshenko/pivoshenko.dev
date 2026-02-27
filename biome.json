@@ -26,6 +26,11 @@
       "semicolons": "asNeeded"
     }
   },
+  "css": {
+    "linter": {
+      "enabled": false
+    }
+  },
   "files": {
     "ignore": ["node_modules", ".next", "dist"]
   }

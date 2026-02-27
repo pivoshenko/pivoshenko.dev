@@ -1,12 +1,9 @@
-import type { Config } from 'tailwindcss'
 import typography from '@tailwindcss/typography'
+import type { Config } from 'tailwindcss'
 
 const config: Config = {
   darkMode: 'class',
-  content: [
-    './app/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-  ],
+  content: ['./app/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       fontFamily: {
@@ -43,7 +40,7 @@ const config: Config = {
             '--tw-prose-invert-captions': theme('colors.stone[400]'),
             '--tw-prose-invert-code': theme('colors.stone[100]'),
             '--tw-prose-invert-pre-code': theme('colors.stone[300]'),
-            '--tw-prose-invert-pre-bg': 'rgb(0 0 0 / 50%)',
+            '--tw-prose-invert-pre-bg': 'transparent',
             '--tw-prose-invert-th-borders': theme('colors.stone[600]'),
             '--tw-prose-invert-td-borders': theme('colors.stone[700]'),
             maxWidth: 'none',
@@ -74,6 +71,9 @@ const config: Config = {
           css: {
             code: {
               backgroundColor: theme('colors.stone[800]'),
+            },
+            'pre code': {
+              backgroundColor: 'transparent',
             },
           },
         },

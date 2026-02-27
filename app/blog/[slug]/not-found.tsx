@@ -3,7 +3,9 @@ import Link from 'next/link'
 export default function NotFound() {
   return (
     <div className="space-y-4">
-      <p className="text-xs font-mono text-stone-400 dark:text-stone-500">404</p>
+      <p className="text-xs font-mono text-stone-400 dark:text-stone-500">
+        404
+      </p>
       <h1 className="text-base font-semibold text-stone-900 dark:text-stone-100">
         Post not found
       </h1>

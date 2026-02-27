@@ -2,6 +2,115 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Design tokens ──────────────────────────────────────────────────────────
+   All typography (size, weight, family) and colors live here.
+   Layout, spacing, and interactivity stay at the call-site.
+   ─────────────────────────────────────────────────────────────────────────── */
+@layer components {
+  /* --- Typography --- */
+
+  /* Page-level h1 (blog listing, about, tag page) */
+  .type-heading {
+    @apply text-base font-semibold;
+  }
+
+  /* Post detail h1 */
+  .type-post-heading {
+    @apply text-xl font-semibold leading-snug;
+  }
+
+  /* Prose paragraphs */
+  .type-body {
+    @apply text-sm leading-relaxed;
+  }
+
+  /* UI text: titles in lists, nav links, link labels */
+  .type-ui {
+    @apply text-sm;
+  }
+
+  /* Section labels: year headers, "Recent writing", "Links" */
+  .type-label {
+    @apply text-xs font-mono uppercase tracking-widest;
+  }
+
+  /* Metadata: dates, reading time, counts, tags, back links, footer */
+  .type-meta {
+    @apply text-xs font-mono;
+  }
+
+  /* Post description snippets (sans-serif small) */
+  .type-caption {
+    @apply text-xs leading-relaxed;
+  }
+
+  /* Nav logo */
+  .type-logo {
+    @apply text-sm font-semibold font-mono tracking-tight;
+  }
+
+  /* --- Foreground colors --- */
+
+  /* Headings, active nav, strong emphasis */
+  .fg-primary {
+    @apply text-stone-900 dark:text-stone-100;
+  }
+
+  /* Article titles in listing pages */
+  .fg-title {
+    @apply text-stone-800 dark:text-stone-200;
+  }
+
+  /* Post titles in listings, link text */
+  .fg-secondary {
+    @apply text-stone-700 dark:text-stone-300;
+  }
+
+  /* Body paragraphs */
+  .fg-body {
+    @apply text-stone-600 dark:text-stone-400;
+  }
+
+  /* Nav inactive, short descriptions */
+  .fg-subtle {
+    @apply text-stone-500 dark:text-stone-400;
+  }
+
+  /* Dates, tags, section labels, footer, metadata */
+  .fg-muted {
+    @apply text-stone-400 dark:text-stone-500;
+  }
+
+  /* --- Hover foreground --- */
+  .hover-primary {
+    @apply hover:text-stone-900 dark:hover:text-stone-100;
+  }
+  .hover-secondary {
+    @apply hover:text-stone-700 dark:hover:text-stone-300;
+  }
+
+  /* --- Backgrounds --- */
+  .bg-tag {
+    @apply bg-stone-100 dark:bg-stone-800/70;
+  }
+  .bg-tag-active {
+    @apply bg-stone-200 dark:bg-stone-700;
+  }
+
+  /* --- Borders --- */
+  .border-ui {
+    @apply border-stone-200 dark:border-stone-800;
+  }
+  .border-faint {
+    @apply border-stone-100 dark:border-stone-800/60;
+  }
+
+  /* --- Underline decoration --- */
+  .deco-subtle {
+    @apply decoration-stone-300 dark:decoration-stone-600;
+  }
+}
+
 @layer base {
   html {
     -webkit-font-smoothing: antialiased;
@@ -9,11 +118,11 @@
   }
 
   ::selection {
-    background-color: theme('colors.stone.200');
+    background-color: theme("colors.stone.200");
   }
 
   .dark ::selection {
-    background-color: theme('colors.stone.700');
+    background-color: theme("colors.stone.700");
   }
 
   * {

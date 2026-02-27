@@ -1,10 +1,16 @@
-import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
-import Link from 'next/link'
+import {
+  formatDate,
+  getAllPosts,
+  getPostMeta,
+  getPostRawContent,
+  readingTime,
+} from '@/lib/posts'
 import { evaluate } from '@mdx-js/mdx'
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
 import * as runtime from 'react/jsx-runtime'
 import remarkGfm from 'remark-gfm'
-import { getAllPosts, getPostMeta, getPostRawContent, formatDate, readingTime } from '@/lib/posts'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -43,16 +49,14 @@ export default async function BlogPost({ params }: Props) {
       <header className="space-y-4">
         <Link
           href="/blog"
-          className="inline-block text-xs font-mono text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors"
+          className="inline-block type-meta fg-muted hover-secondary transition-colors"
         >
           ← Blog
         </Link>
 
-        <h1 className="text-xl font-semibold text-stone-900 dark:text-stone-100 leading-snug">
-          {post.title}
-        </h1>
+        <h1 className="type-post-heading fg-primary">{post.title}</h1>
 
-        <div className="flex items-center gap-2 font-mono text-xs text-stone-400 dark:text-stone-500">
+        <div className="flex items-center gap-2 type-meta fg-muted">
           <time dateTime={post.date}>{formatDate(post.date)}</time>
           <span aria-hidden>·</span>
           <span>{readingTime(rawContent)}</span>
@@ -61,18 +65,19 @@ export default async function BlogPost({ params }: Props) {
         {post.tags.length > 0 && (
           <div className="flex flex-wrap gap-1.5">
             {post.tags.map((tag) => (
-              <span
+              <Link
                 key={tag}
-                className="text-xs font-mono px-1.5 py-0.5 rounded bg-stone-100 dark:bg-stone-800/70 text-stone-400 dark:text-stone-500"
+                href={`/blog/tags/${encodeURIComponent(tag)}`}
+                className="type-meta px-1.5 py-0.5 rounded bg-tag fg-muted hover-secondary transition-colors"
               >
                 {tag}
-              </span>
+              </Link>
             ))}
           </div>
         )}
       </header>
 
-      <hr className="border-stone-200 dark:border-stone-800" />
+      <hr className="border-ui" />
 
       <div className="prose prose-stone dark:prose-invert prose-sm max-w-none">
         <MDXContent />

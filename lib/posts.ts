@@ -1,5 +1,5 @@
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 import matter from 'gray-matter'
 
 const postsDir = path.join(process.cwd(), 'content/posts')
@@ -65,6 +65,10 @@ export function getPostRawContent(slug: string): string | null {
   } catch {
     return null
   }
+}
+
+export function getPostsByTag(tag: string): PostMeta[] {
+  return getAllPosts().filter((post) => post.tags.includes(tag))
 }
 
 export function formatDate(dateString: string): string {
