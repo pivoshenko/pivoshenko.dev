@@ -1,0 +1,252 @@
+---
+title: Hardening a VPS - Zero Trust Setup with Tailscale
+date: 2026-02-28
+description: A step-by-step guide to securing a fresh Ubuntu VPS with layered defence — Tailscale as the private network, UFW as the firewall, SSH hardening, and fail2ban for intrusion prevention.
+tags: [vps, tailscale, security, linux, ssh, devops, ai, openclaw]
+---
+
+A step-by-step guide to securing a fresh Ubuntu VPS for hosting personal projects. The goal is a layered defence: Tailscale as the private network, UFW as the firewall, SSH hardening, and fail2ban for intrusion prevention.
+
+## Why Layered Security?
+
+No single measure is bulletproof:
+
+- **Tailscale** - only your devices can reach SSH
+- **UFW** - blocks all uninvited public traffic
+- **SSH hardening** - keys only, no passwords
+- **fail2ban** - bans IPs after repeated failures
+- **Auto-updates** - patches vulnerabilities automatically
+
+Each layer independently reduces risk. If one fails, the others hold.
+
+## Tailscale - Private Mesh Network
+
+Install and authenticate Tailscale first. Everything else builds on top of it.
+
+```bash
+curl -fsSL https://tailscale.com/install.sh | sh
+tailscale up
+```
+
+Open the auth URL printed in the terminal, approve the device in your Tailscale dashboard, then verify:
+
+```bash
+tailscale status
+```
+
+You should see your VPS listed with a `100.x.x.x` IP. From now on, use that IP to connect - not the public one.
+
+Enable auto-updates:
+
+```bash
+tailscale set --auto-update
+```
+
+## UFW - Firewall
+
+Block all public inbound traffic. Allow only Tailscale, HTTP, and HTTPS.
+
+```bash
+# SSH only through Tailscale
+ufw allow in on tailscale0 to any port 22 proto tcp
+
+# Public web traffic (for hosting a blog/app)
+ufw allow 80/tcp
+ufw allow 443/tcp
+
+# Allow all Tailscale traffic
+ufw allow in on tailscale0
+
+# Default policies
+ufw default deny incoming
+ufw default allow outgoing
+
+echo 'y' | ufw enable
+ufw status verbose
+```
+
+> **Note:** After enabling UFW, `ssh user@public-ip` will time out. Always connect via the Tailscale IP going forward.
+
+## SSH Hardening
+
+Create the hardening config file:
+
+```bash
+cat > /etc/ssh/sshd_config.d/hardening.conf << 'EOF'
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+PermitRootLogin prohibit-password
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys
+MaxAuthTries 3
+LoginGraceTime 20
+X11Forwarding no
+AllowTcpForwarding no
+ClientAliveInterval 300
+ClientAliveCountMax 2
+ListenAddress YOUR_TAILSCALE_IP
+ListenAddress 127.0.0.1
+EOF
+```
+
+Replace `YOUR_TAILSCALE_IP` with your actual Tailscale address (e.g. `100.x.x.x`).
+
+Test and apply:
+
+```bash
+sshd -t && systemctl restart ssh
+```
+
+> **Ubuntu 24.04 gotcha:** Ubuntu 24.04 uses systemd socket activation for SSH. This means `ListenAddress` in `sshd_config` is ignored — the socket unit controls which interface SSH binds to. You must override it separately:
+
+```bash
+mkdir -p /etc/systemd/system/ssh.socket.d
+cat > /etc/systemd/system/ssh.socket.d/override.conf << 'EOF'
+[Socket]
+ListenStream=
+ListenStream=YOUR_TAILSCALE_IP:22
+ListenStream=[::1]:22
+EOF
+
+systemctl daemon-reload
+systemctl restart ssh.socket ssh.service
+```
+
+The empty `ListenStream=` clears the default `0.0.0.0:22` binding before setting the new one. Verify it worked:
+
+```bash
+ss -tlnp | grep sshd
+# Should show YOUR_TAILSCALE_IP:22 only, not 0.0.0.0:22
+```
+
+What each directive does:
+
+| Directive | Effect |
+|-----------|--------|
+| `PasswordAuthentication no` | Keys only - no brute-force via password |
+| `KbdInteractiveAuthentication no` | Blocks interactive keyboard auth |
+| `PermitRootLogin prohibit-password` | Root allowed via key, never via password |
+| `ListenAddress` | SSH only reachable on Tailscale interface |
+| `MaxAuthTries 3` | Limits guesses per connection |
+| `X11Forwarding no` | Removes unnecessary attack surface |
+
+## Non-root User
+
+Never run your daily work as root. Create a dedicated user:
+
+```bash
+useradd -m -s /bin/bash youruser
+usermod -aG sudo youruser
+
+# Copy your SSH key
+mkdir -p /home/youruser/.ssh
+cp /root/.ssh/authorized_keys /home/youruser/.ssh/authorized_keys
+chown -R youruser:youruser /home/youruser/.ssh
+chmod 700 /home/youruser/.ssh
+chmod 600 /home/youruser/.ssh/authorized_keys
+```
+
+Optional - passwordless sudo (safe when password auth is disabled):
+
+```bash
+echo 'youruser ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/youruser
+chmod 440 /etc/sudoers.d/youruser
+```
+
+Verify before locking root out:
+
+```bash
+ssh youruser@YOUR_TAILSCALE_IP "whoami && sudo whoami"
+```
+
+## Fail2ban - Intrusion Prevention
+
+```bash
+apt-get install -y fail2ban
+```
+
+Configure aggressive SSH protection with a recidive jail for repeat offenders:
+
+```bash
+cat > /etc/fail2ban/jail.local << 'EOF'
+[DEFAULT]
+bantime  = 24h
+findtime = 10m
+maxretry = 3
+backend  = auto
+ignoreip = 127.0.0.1/8 100.64.0.0/10
+
+[sshd]
+enabled = true
+mode    = aggressive
+
+[recidive]
+enabled   = true
+logpath   = /var/log/fail2ban.log
+banaction = nftables[type=allports]
+bantime   = 168h
+findtime  = 24h
+maxretry  = 3
+EOF
+
+systemctl enable fail2ban && systemctl restart fail2ban
+```
+
+The `ignoreip` line ensures Tailscale addresses (`100.64.0.0/10`) are never accidentally banned.
+
+> **Ubuntu 24.04 gotcha:** Ubuntu ships `/etc/fail2ban/jail.d/defaults-debian.conf` which sets `backend = systemd`. This means fail2ban reads only from the systemd journal, not from `/var/log/auth.log`. Setting `backend = auto` in `jail.local` overrides this and makes fail2ban read log files directly — which is more reliable and catches attacks even if the journal is rotated or truncated.
+
+The `recidive` jail watches fail2ban's own log. Any IP that gets banned 3 or more times within 24 hours is blocked on **all ports** for 7 days — catching scanners that rotate through different exploits.
+
+Check status:
+
+```bash
+fail2ban-client status sshd
+fail2ban-client status recidive
+```
+
+## Automatic Security Updates
+
+Keep the OS patched without manual intervention:
+
+```bash
+apt-get install -y unattended-upgrades
+systemctl enable unattended-upgrades
+```
+
+## Dedicated Service Users
+
+For each app you host (e.g. OpenClaw, a blog engine), create an isolated user with no sudo and no SSH access:
+
+```bash
+useradd -m -s /bin/bash -c 'App description' appname
+```
+
+Running services as dedicated users limits blast radius - a compromised app can't touch the rest of the system.
+
+## Docker + UFW Warning
+
+If you plan to run Docker containers, be aware that **Docker bypasses UFW** by writing iptables rules directly. A container published with `-p 80:80` will be publicly accessible even if UFW has no rule for it.
+
+The fix: always put **Nginx as a reverse proxy** in front of your containers, bind Docker to localhost only, and let Nginx handle the public-facing ports that UFW allows.
+
+```bash
+# Bind container to localhost only — Nginx proxies it publicly
+docker run -p 127.0.0.1:3000:3000 myapp
+```
+
+## Emergency Access
+
+If Tailscale ever goes down and you can't SSH in, use your provider's rescue console (Hetzner, DigitalOcean, etc.) - it gives direct KVM access to the server regardless of network state. Bookmark it.
+
+## Final Checklist
+
+- [ ] Tailscale installed and authenticated
+- [ ] UFW active - SSH Tailscale-only, HTTP/HTTPS public
+- [ ] SSH: keys only, no passwords, ListenAddress set
+- [ ] Non-root user created and verified
+- [ ] Root login: key only (`prohibit-password`)
+- [ ] fail2ban active - aggressive mode, recidive jail enabled
+- [ ] unattended-upgrades active
+- [ ] Tailscale auto-update enabled
+- [ ] Rescue console bookmarked
