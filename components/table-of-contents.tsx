@@ -38,7 +38,7 @@ export function TableOfContents({ headings }: Props) {
       {open && (
         <div className="mb-2 w-64 max-h-72 overflow-y-auto border border-ui bg-stone-50 dark:bg-black">
           <div className="px-3 py-2 border-b border-ui">
-            <span className="type-label fg-muted">Contents</span>
+            <span className="type-meta fg-muted">Contents</span>
           </div>
           <nav aria-label="Table of contents">
             <ul className="py-1">
