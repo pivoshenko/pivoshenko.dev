@@ -7,7 +7,8 @@ import { ThemeToggle } from './theme-toggle'
 const links = [
   { href: '/', label: 'Home' },
   { href: '/blog', label: 'Blog' },
-  { href: '/about', label: 'About' },
+  // for now I disable it since I need to rewrite it
+  // { href: '/about', label: 'About' },
 ]
 
 export function Nav() {
@@ -20,7 +21,7 @@ export function Nav() {
           href="/"
           className="type-logo fg-primary hover:opacity-60 transition-opacity"
         >
-          Volodymyr Pivoshenko
+          pivoshenko.dev
         </Link>
 
         <div className="flex items-center">
@@ -33,9 +34,8 @@ export function Nav() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`type-ui px-3 py-1.5 rounded transition-colors ${
-                  isActive ? 'fg-primary' : 'fg-subtle hover-primary'
-                }`}
+                className={`type-ui px-3 py-1.5 rounded transition-colors ${isActive ? 'fg-primary' : 'fg-subtle hover-primary'
+                  }`}
               >
                 {link.label}
               </Link>
