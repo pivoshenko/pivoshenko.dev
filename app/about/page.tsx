@@ -18,19 +18,6 @@ export default function About() {
       </div>
 
       <div className="space-y-4 type-body fg-body">
-        <p>
-          Hi, I&apos;m Volodymyr — a software engineer focused on distributed
-          systems, developer tooling, and platform engineering.
-        </p>
-        <p>
-          I write about what I build and learn: TypeScript, DevOps, software
-          architecture, and the intersection of engineering and systems
-          thinking.
-        </p>
-        <p>
-          This blog is my corner of the internet for sharing ideas, documenting
-          experiments, and putting thoughts into words.
-        </p>
       </div>
 
       <div className="space-y-3">
