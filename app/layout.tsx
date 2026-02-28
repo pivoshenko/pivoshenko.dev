@@ -1,6 +1,7 @@
 import { Footer } from '@/components/footer'
 import { Nav } from '@/components/nav'
 import { ReadingProgress } from '@/components/reading-progress'
+import { ScrollToTop } from '@/components/scroll-to-top'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GeistMono } from 'geist/font/mono'
@@ -44,6 +45,7 @@ export default function RootLayout({
             </main>
             <Footer />
           </div>
+          <ScrollToTop />
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />
