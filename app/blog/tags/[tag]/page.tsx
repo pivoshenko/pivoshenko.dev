@@ -40,7 +40,7 @@ export default async function TagPage({ params }: Props) {
         </Link>
         <h1 className="mt-4 type-heading fg-primary">#{decoded}</h1>
         <p className="mt-1 type-meta fg-muted">
-          {posts.length} {posts.length === 1 ? 'article' : 'articles'}
+          {posts.length} {posts.length === 1 ? 'post' : 'posts'}
         </p>
       </div>
 
