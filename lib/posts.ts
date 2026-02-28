@@ -84,3 +84,38 @@ export function readingTime(content: string): string {
   const minutes = Math.max(1, Math.ceil(words / 200))
   return `${minutes} min read`
 }
+
+export interface Heading {
+  level: number
+  text: string
+  id: string
+}
+
+export function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+}
+
+function stripInlineMarkdown(text: string): string {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/\*(.*?)\*/g, '$1')
+    .replace(/`(.*?)`/g, '$1')
+    .replace(/\[(.*?)\]\(.*?\)/g, '$1')
+    .trim()
+}
+
+export function extractHeadings(content: string): Heading[] {
+  return content
+    .split('\n')
+    .flatMap((line) => {
+      const match = line.match(/^(#{2,3})\s+(.+)$/)
+      if (!match) return []
+      const level = match[1].length
+      const text = stripInlineMarkdown(match[2])
+      return [{ level, text, id: slugify(text) }]
+    })
+}
