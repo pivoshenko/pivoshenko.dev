@@ -52,7 +52,7 @@ const links = [
 export function Footer() {
   return (
     <footer className="w-full border-t border-ui">
-      <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
+      <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
         <span className="type-meta fg-muted">
           {new Date().getFullYear()} Volodymyr Pivoshenko
         </span>

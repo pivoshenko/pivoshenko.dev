@@ -37,7 +37,7 @@ export default function Home() {
       </section>
 
       <section className="space-y-6">
-        <h2 className="type-label fg-muted">Recent writing</h2>
+        <h2 className="type-label fg-muted">Recent posts</h2>
 
         {posts.length === 0 ? (
           <p className="type-ui fg-subtle">No posts yet.</p>

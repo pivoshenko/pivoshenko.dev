@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Blog',
-  description: 'Writing on software engineering, systems, and tooling.',
+  description: 'Writing on AI, engineering, systems, and tooling.',
 }
 
 export default function Blog() {
@@ -21,9 +21,9 @@ export default function Blog() {
   return (
     <div className="space-y-12">
       <div>
-        <h1 className="type-heading fg-primary">Writing</h1>
+        <h1 className="type-heading fg-primary">Posts</h1>
         <p className="mt-1 type-meta fg-muted">
-          {posts.length} {posts.length === 1 ? 'article' : 'articles'}
+          {posts.length} {posts.length === 1 ? 'post' : 'posts'}
         </p>
       </div>
 

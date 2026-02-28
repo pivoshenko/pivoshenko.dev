@@ -16,7 +16,7 @@ export function Nav() {
 
   return (
     <header className="w-full border-b border-ui">
-      <nav className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
+      <nav className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link
           href="/"
           className="type-logo fg-primary hover:opacity-60 transition-opacity"
