@@ -40,7 +40,7 @@ const config: Config = {
             '--tw-prose-invert-captions': theme('colors.stone[400]'),
             '--tw-prose-invert-code': theme('colors.stone[100]'),
             '--tw-prose-invert-pre-code': theme('colors.stone[300]'),
-            '--tw-prose-invert-pre-bg': 'transparent',
+            '--tw-prose-invert-pre-bg': '#1e1e1e',
             '--tw-prose-invert-th-borders': theme('colors.stone[600]'),
             '--tw-prose-invert-td-borders': theme('colors.stone[700]'),
             maxWidth: 'none',
@@ -71,6 +71,11 @@ const config: Config = {
           css: {
             code: {
               backgroundColor: theme('colors.stone[800]'),
+            },
+            pre: {
+              backgroundColor: '#1e1e1e',
+              borderWidth: '1px',
+              borderColor: theme('colors.stone[700]'),
             },
             'pre code': {
               backgroundColor: 'transparent',
