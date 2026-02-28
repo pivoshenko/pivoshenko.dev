@@ -29,7 +29,7 @@
     @apply text-sm;
   }
 
-  /* Section labels: year headers, "Recent writing", "Links" */
+  /* Section labels: year headers, "Recent posts", "Links" */
   .type-label {
     @apply text-xs font-mono uppercase tracking-widest;
   }
