@@ -1,5 +1,6 @@
 import { Footer } from '@/components/footer'
 import { Nav } from '@/components/nav'
+import { ReadingProgress } from '@/components/reading-progress'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GeistMono } from 'geist/font/mono'
@@ -36,6 +37,7 @@ export default function RootLayout({
       <body className="bg-stone-50 text-stone-900 dark:bg-black dark:text-stone-100 font-sans antialiased">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="min-h-screen flex flex-col">
+            <ReadingProgress />
             <Nav />
             <main className="flex-1 w-full max-w-4xl mx-auto px-4 py-6">
               {children}
