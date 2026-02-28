@@ -1,9 +1,12 @@
+import { TableOfContents } from '@/components/table-of-contents'
 import {
+  extractHeadings,
   formatDate,
   getAllPosts,
   getPostMeta,
   getPostRawContent,
   readingTime,
+  slugify,
 } from '@/lib/posts'
 import { evaluate } from '@mdx-js/mdx'
 import type { Metadata } from 'next'
@@ -11,6 +14,42 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import * as runtime from 'react/jsx-runtime'
 import remarkGfm from 'remark-gfm'
+
+function rehypeHeadingIds() {
+  return (tree: { children: unknown[] }) => {
+    walk(tree)
+  }
+}
+
+function walk(node: unknown): void {
+  if (!node || typeof node !== 'object') return
+  const n = node as Record<string, unknown>
+  if (
+    n.type === 'element' &&
+    (n.tagName === 'h2' || n.tagName === 'h3') &&
+    Array.isArray(n.children)
+  ) {
+    const text = extractText(n.children)
+    n.properties = { ...(n.properties as object), id: slugify(text) }
+  }
+  if (Array.isArray(n.children)) {
+    for (const child of n.children) walk(child)
+  }
+}
+
+function extractText(nodes: unknown[]): string {
+  return nodes
+    .map((n) => {
+      if (!n || typeof n !== 'object') return ''
+      const node = n as Record<string, unknown>
+      if (node.type === 'text') return node.value as string
+      if (node.type === 'element' && Array.isArray(node.children)) {
+        return extractText(node.children)
+      }
+      return ''
+    })
+    .join('')
+}
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -38,13 +77,17 @@ export default async function BlogPost({ params }: Props) {
 
   if (!post || rawContent === null) notFound()
 
+  const headings = extractHeadings(rawContent)
+
   const { default: MDXContent } = await evaluate(rawContent, {
     ...(runtime as Parameters<typeof evaluate>[1]),
     remarkPlugins: [[remarkGfm]],
-    rehypePlugins: [],
+    rehypePlugins: [rehypeHeadingIds],
   })
 
   return (
+    <>
+    <TableOfContents headings={headings} />
     <article className="space-y-10">
       <header className="space-y-4">
         <Link
@@ -83,5 +126,6 @@ export default async function BlogPost({ params }: Props) {
         <MDXContent />
       </div>
     </article>
+    </>
   )
 }
