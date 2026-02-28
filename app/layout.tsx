@@ -34,7 +34,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${GeistSans.variable} ${GeistMono.variable}`}
     >
-      <body className="bg-stone-50 text-stone-900 dark:bg-black dark:text-stone-100 font-sans antialiased">
+      <body className="bg-stone-50 text-stone-900 dark:bg-black dark:text-stone-100 font-mono antialiased">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="min-h-screen flex flex-col">
             <ReadingProgress />

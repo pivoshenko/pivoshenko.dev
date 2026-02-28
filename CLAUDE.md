@@ -62,7 +62,17 @@ All typography and color tokens are defined as Tailwind `@layer components` util
 
 **Underline decoration:** `deco-subtle`
 
-Fonts are Geist Sans (`font-sans`) and Geist Mono (`font-mono`). Dark mode uses the `class` strategy via `next-themes`.
+Font is **Geist Mono** (`font-mono`) site-wide — everything is monospace by design. Dark mode uses the `class` strategy via `next-themes`.
+
+### Layout Width
+
+Site content is constrained to `max-w-4xl`. This must be kept in sync across **three files**: `components/nav.tsx`, `app/layout.tsx` (`<main>`), and `components/footer.tsx`.
+
+### Conventions
+
+- Use **"posts"** not "articles" in all UI copy — `<article>` HTML element is fine, visible text says "post/posts".
+- `/about` route exists (`app/about/page.tsx`) but is currently disabled in `components/nav.tsx`.
+- `components/reading-progress.tsx` — fixed scroll progress bar, included in root layout.
 
 ### Path Alias
 

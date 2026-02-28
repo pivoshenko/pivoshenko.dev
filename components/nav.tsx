@@ -34,8 +34,9 @@ export function Nav() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`type-ui px-3 py-1.5 rounded transition-colors ${isActive ? 'fg-primary' : 'fg-subtle hover-primary'
-                  }`}
+                className={`type-ui px-3 py-1.5 rounded transition-colors ${
+                  isActive ? 'fg-primary' : 'fg-subtle hover-primary'
+                }`}
               >
                 {link.label}
               </Link>
