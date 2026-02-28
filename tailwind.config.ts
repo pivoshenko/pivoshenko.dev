@@ -60,6 +60,8 @@ const config: Config = {
             },
             pre: {
               borderRadius: '0.5rem',
+              borderWidth: '1px',
+              borderColor: theme('colors.stone[700]'),
             },
             'pre code': {
               backgroundColor: 'transparent',
