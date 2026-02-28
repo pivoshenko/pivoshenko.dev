@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Design tokens ──────────────────────────────────────────────────────────
-   All typography (size, weight, family) and colors live here.
-   Layout, spacing, and interactivity stay at the call-site.
-   ─────────────────────────────────────────────────────────────────────────── */
 @layer components {
   /* --- Typography --- */
 
@@ -85,6 +81,7 @@
   .hover-primary {
     @apply hover:text-stone-900 dark:hover:text-stone-100;
   }
+
   .hover-secondary {
     @apply hover:text-stone-700 dark:hover:text-stone-300;
   }
@@ -93,6 +90,7 @@
   .bg-tag {
     @apply bg-stone-100 dark:bg-stone-800/70;
   }
+
   .bg-tag-active {
     @apply bg-stone-200 dark:bg-stone-700;
   }
@@ -101,6 +99,7 @@
   .border-ui {
     @apply border-stone-200 dark:border-stone-800;
   }
+
   .border-faint {
     @apply border-stone-100 dark:border-stone-800/60;
   }

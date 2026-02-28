@@ -17,8 +17,7 @@ export default function About() {
         <h1 className="type-heading fg-primary">About</h1>
       </div>
 
-      <div className="space-y-4 type-body fg-body">
-      </div>
+      <div className="space-y-4 type-body fg-body" />
 
       <div className="space-y-3">
         <h2 className="type-label fg-muted">Links</h2>

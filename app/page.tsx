@@ -10,13 +10,18 @@ export default function Home() {
       <section className="space-y-4">
         <h1 className="type-heading fg-primary">Volodymyr Pivoshenko</h1>
         <p className="type-body fg-body">
-          R&D/AI/ML Engineering Lead fascinated by AI, system design, and software development.
+          R&D/AI/ML Engineering Lead fascinated by AI, system design, and
+          software development.
         </p>
         <p className="type-body fg-body">
-          In my current role, I lead the R&D team and work hands-on with architecture and implementation. I help turn rough ideas into working solutions and keep engineering decisions practical and scalable.
+          In my current role, I lead the R&D team and work hands-on with
+          architecture and implementation. I help turn rough ideas into working
+          solutions and keep engineering decisions practical and scalable.
         </p>
         <p className="type-body fg-body">
-          In my spare time, I build side projects and contribute to open source. It is my space to experiment with new tools and architectures, explore ideas, and collaborate with people who care about making things well.
+          In my spare time, I build side projects and contribute to open source.
+          It is my space to experiment with new tools and architectures, explore
+          ideas, and collaborate with people who care about making things well.
         </p>
         <p className="type-body fg-body">
           Outside of work, I enjoy cycling and playing video games to unwind.
