@@ -1,11 +1,13 @@
 ---
-title: Hardening a VPS - Zero Trust Setup with Tailscale
+title: Hardening an OpenClaw VPS - Zero Trust Setup with Tailscale
 date: 2026-02-28
 description: A step-by-step guide to securing a fresh Ubuntu VPS with layered defence — Tailscale as the private network, UFW as the firewall, SSH hardening, and fail2ban for intrusion prevention.
 tags: [vps, tailscale, security, linux, ssh, devops, ai, openclaw]
 ---
 
 A step-by-step guide to securing a fresh Ubuntu VPS for hosting personal projects. The goal is a layered defence: Tailscale as the private network, UFW as the firewall, SSH hardening, and fail2ban for intrusion prevention.
+
+This is also the security baseline I use to run OpenClaw safely on a public VPS without exposing control interfaces to the internet.
 
 ## Why Layered Security?
 
@@ -238,6 +240,18 @@ docker run -p 127.0.0.1:3000:3000 myapp
 ## Emergency Access
 
 If Tailscale ever goes down and you can't SSH in, use your provider's rescue console (Hetzner, DigitalOcean, etc.) - it gives direct KVM access to the server regardless of network state. Bookmark it.
+
+## OpenClaw-Specific Hardening
+
+When the VPS is used for OpenClaw, add these controls on top of host hardening:
+
+- Bind OpenClaw Gateway to loopback (`127.0.0.1`) so it is never directly internet-exposed.
+- Access the OpenClaw UI only through trusted private networking (Tailscale) or a secured relay.
+- Require explicit device pairing approval for any new browser/device trying to control the agent.
+- Run OpenClaw under a dedicated service user with least privilege.
+- Keep credentials in environment or secret storage, never in repo files or shell history.
+
+This keeps the control plane private while still allowing convenient remote access from your own devices.
 
 ## Final Checklist
 
