@@ -87,45 +87,45 @@ export default async function BlogPost({ params }: Props) {
 
   return (
     <>
-    <TableOfContents headings={headings} />
-    <article className="space-y-10">
-      <header className="space-y-4">
-        <Link
-          href="/blog"
-          className="inline-block type-meta fg-muted hover-secondary transition-colors"
-        >
-          ← Blog
-        </Link>
+      <TableOfContents headings={headings} />
+      <article className="space-y-10">
+        <header className="space-y-4">
+          <Link
+            href="/blog"
+            className="inline-block type-meta fg-muted hover-secondary transition-colors"
+          >
+            ← Blog
+          </Link>
 
-        <h1 className="type-post-heading fg-primary">{post.title}</h1>
+          <h1 className="type-post-heading fg-primary">{post.title}</h1>
 
-        <div className="flex items-center gap-2 type-meta fg-muted">
-          <time dateTime={post.date}>{formatDate(post.date)}</time>
-          <span aria-hidden>·</span>
-          <span>{readingTime(rawContent)}</span>
-        </div>
-
-        {post.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5">
-            {post.tags.map((tag) => (
-              <Link
-                key={tag}
-                href={`/blog/tags/${encodeURIComponent(tag)}`}
-                className="type-meta px-1.5 py-0.5 rounded bg-tag fg-muted hover-secondary transition-colors"
-              >
-                {tag}
-              </Link>
-            ))}
+          <div className="flex items-center gap-2 type-meta fg-muted">
+            <time dateTime={post.date}>{formatDate(post.date)}</time>
+            <span aria-hidden>·</span>
+            <span>{readingTime(rawContent)}</span>
           </div>
-        )}
-      </header>
 
-      <hr className="border-ui" />
+          {post.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {post.tags.map((tag) => (
+                <Link
+                  key={tag}
+                  href={`/blog/tags/${encodeURIComponent(tag)}`}
+                  className="type-meta px-1.5 py-0.5 rounded bg-tag fg-muted hover-secondary transition-colors"
+                >
+                  {tag}
+                </Link>
+              ))}
+            </div>
+          )}
+        </header>
 
-      <div className="prose prose-stone dark:prose-invert prose-sm max-w-none">
-        <MDXContent />
-      </div>
-    </article>
+        <hr className="border-ui" />
+
+        <div className="prose prose-stone dark:prose-invert prose-sm max-w-none">
+          <MDXContent />
+        </div>
+      </article>
     </>
   )
 }
