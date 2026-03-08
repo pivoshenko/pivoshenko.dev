@@ -11,4 +11,4 @@
 
 ## Overview
 
-My personal tech blog, where I share my thoughts, experiences, and insights on software development, technology trends, and best practices. This blog serves as a platform for me to connect with fellow developers, exchange ideas, and contribute to the tech community.
+My personal tech blog where I share thoughts, experiments, and practical notes on software engineering, AI, and developer tooling.
