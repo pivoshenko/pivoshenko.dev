@@ -109,13 +109,11 @@ function stripInlineMarkdown(text: string): string {
 }
 
 export function extractHeadings(content: string): Heading[] {
-  return content
-    .split('\n')
-    .flatMap((line) => {
-      const match = line.match(/^(#{2,3})\s+(.+)$/)
-      if (!match) return []
-      const level = match[1].length
-      const text = stripInlineMarkdown(match[2])
-      return [{ level, text, id: slugify(text) }]
-    })
+  return content.split('\n').flatMap((line) => {
+    const match = line.match(/^(#{2,3})\s+(.+)$/)
+    if (!match) return []
+    const level = match[1].length
+    const text = stripInlineMarkdown(match[2])
+    return [{ level, text, id: slugify(text) }]
+  })
 }

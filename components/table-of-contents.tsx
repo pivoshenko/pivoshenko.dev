@@ -18,7 +18,10 @@ export function TableOfContents({ headings }: Props) {
       if (e.key === 'Escape') setOpen(false)
     }
     const onPointer = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
         setOpen(false)
       }
     }
