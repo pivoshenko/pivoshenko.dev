@@ -5,81 +5,54 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-pnpm dev        # Start dev server with Turbopack
-pnpm build      # Production build
-pnpm lint       # Biome lint
-pnpm format     # Biome format (writes)
-pnpm check      # Biome lint + format (writes)
+just format    # biome format --write
+just lint      # biome check + next build
+just           # list all recipes
 ```
 
-No test suite is configured — there are no test commands.
+Direct pnpm scripts:
+```bash
+pnpm dev       # Next.js dev server with Turbopack
+pnpm build     # Production build
+pnpm check     # biome check --write (lint + format combined)
+pnpm lint      # biome lint only
+pnpm format    # biome format --write only
+```
+
+No test suite is configured — `pnpm test` will fail.
 
 ## Architecture
 
-Personal blog built with **Next.js 15** (App Router), **TypeScript**, **Tailwind CSS v3**, and **MDX** for blog content. Deployed to Vercel.
+**Stack:** Next.js 16 (App Router) · TypeScript strict · React 19 · MDX 3 · Tailwind CSS 3 · Biome (lint + format)
 
-### Content Pipeline
+### Content pipeline
 
-Blog posts are plain `.mdx` files in `content/posts/`. They use gray-matter frontmatter:
-
-```mdx
----
-title: Post Title
-date: 2025-01-15
-description: Short description shown in listings.
-tags: [tag1, tag2]
----
-
-MDX content here...
-```
-
-`lib/posts.ts` reads these files at build time using Node `fs` — no database, no CMS. Posts are rendered at `app/blog/[slug]/page.tsx` via `@mdx-js/mdx`'s `evaluate()` with `remarkGfm` enabled. Static params are generated from all `.mdx` files.
+Blog posts live in `content/posts/*.mdx` with YAML frontmatter (`title`, `date`, `description`, `tags`). `lib/posts.ts` is the single entry point for all post access — it exposes `getAllPosts()`, `getPostMeta()`, and `getPostRawContent()` which are used by every blog-related route.
 
 ### Routing
 
-| Route              | File                                                   |
-| ------------------ | ------------------------------------------------------ |
-| `/`                | `app/page.tsx` — shows 5 latest posts + all tags       |
-| `/blog`            | `app/blog/page.tsx` — all posts grouped by year        |
-| `/blog/[slug]`     | `app/blog/[slug]/page.tsx` — rendered MDX post         |
-| `/blog/tags/[tag]` | `app/blog/tags/[tag]/page.tsx` — posts filtered by tag |
-| `/about`           | `app/about/page.tsx`                                   |
-| `/rss.xml`         | `app/rss.xml/route.ts` — RSS 2.0 feed                  |
+| Route        | File                           |
+| ------------ | ------------------------------ |
+| Home         | `app/page.tsx`                 |
+| Blog listing | `app/blog/page.tsx`            |
+| Post         | `app/blog/[slug]/page.tsx`     |
+| Tag filter   | `app/blog/tags/[tag]/page.tsx` |
+| RSS feed     | `app/rss.xml/route.ts`         |
 
-### Design System
+### Styling conventions
 
-All typography and color tokens are defined as Tailwind `@layer components` utilities in `app/globals.css`. Use these classes — do not reach for raw Tailwind equivalents.
+`app/globals.css` defines a semantic typography system used throughout:
+- **Type scale:** `.type-heading`, `.type-post-heading`, `.type-body`, `.type-ui`, `.type-label`, `.type-meta`, `.type-caption`, `.type-logo`
+- **Color roles:** `.fg-primary`, `.fg-secondary`, `.fg-body`, `.fg-subtle`, `.fg-muted`
+- Stone color palette, dark mode via `next-themes` (class strategy)
+- Geist Sans + Geist Mono as CSS variables (`--font-geist-sans`, `--font-geist-mono`)
 
-**Typography:** `type-heading`, `type-post-heading`, `type-body`, `type-ui`, `type-label`, `type-meta`, `type-caption`, `type-logo`
+Use these semantic classes rather than raw Tailwind color utilities when styling text and foreground elements.
 
-**Foreground colors:** `fg-primary`, `fg-title`, `fg-secondary`, `fg-body`, `fg-subtle`, `fg-muted`
+### MDX components
 
-**Hover:** `hover-primary`, `hover-secondary`
+Custom MDX component mappings are in `mdx-components.tsx`. When adding new MDX-renderable elements, register them there.
 
-**Backgrounds:** `bg-tag`, `bg-tag-active`
+### Path alias
 
-**Borders:** `border-ui`, `border-faint`
-
-**Underline decoration:** `deco-subtle`
-
-Font is **Geist Mono** (`font-mono`) site-wide — everything is monospace by design. Dark mode uses the `class` strategy via `next-themes`.
-
-### Layout Width
-
-Site content is constrained to `max-w-4xl`. This must be kept in sync across **three files**: `components/nav.tsx`, `app/layout.tsx` (`<main>`), and `components/footer.tsx`.
-
-### Conventions
-
-- Use **"posts"** not "articles" in all UI copy — `<article>` HTML element is fine, visible text says "post/posts".
-- `/about` route exists (`app/about/page.tsx`) but is currently disabled in `components/nav.tsx`.
-- `components/reading-progress.tsx` — fixed scroll progress bar, included in root layout.
-
-### Path Alias
-
-`@/*` resolves to the repo root. Import as `@/lib/posts`, `@/components/nav`, etc.
-
-### Tooling
-
-- **Biome** handles linting and formatting (replaces ESLint + Prettier). Single quotes, 2-space indent, 80-char line width, no semicolons, trailing commas.
-- **`@tailwindcss/typography`** styles MDX prose via `prose prose-stone dark:prose-invert prose-sm` on the post wrapper.
-- Vercel Analytics and Speed Insights are injected in `app/layout.tsx`.
+`@/*` resolves to the repository root — use it for all internal imports.
