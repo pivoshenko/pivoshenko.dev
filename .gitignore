@@ -35,8 +35,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# OS
-.DS_Store
-
 # IDEs
 .vscode
