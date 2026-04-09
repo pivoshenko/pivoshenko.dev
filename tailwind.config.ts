@@ -7,8 +7,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-geist-sans)', 'ui-sans-serif', 'system-ui'],
-        mono: ['var(--font-geist-mono)', 'ui-monospace', 'SFMono-Regular'],
+        sans: ['ui-sans-serif', 'system-ui'],
+        mono: ['var(--font-jetbrains-mono)', 'ui-monospace', 'SFMono-Regular'],
       },
       typography: (theme: (key: string) => string) => ({
         DEFAULT: {
@@ -51,7 +51,7 @@ const config: Config = {
             'code::before': { content: '""' },
             'code::after': { content: '""' },
             code: {
-              fontFamily: 'var(--font-geist-mono)',
+              fontFamily: 'var(--font-jetbrains-mono)',
               fontSize: '0.875em',
               fontWeight: '400',
               backgroundColor: theme('colors.stone[100]'),
