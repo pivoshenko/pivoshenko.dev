@@ -8,10 +8,7 @@ export const runtime = 'nodejs'
 
 export default function Icon() {
   const font = readFileSync(
-    join(
-      process.cwd(),
-      'node_modules/geist/dist/fonts/geist-mono/GeistMono-Bold.ttf',
-    ),
+    join(process.cwd(), 'public/fonts/JetBrainsMono-Bold.ttf'),
   )
 
   return new ImageResponse(
@@ -28,7 +25,7 @@ export default function Icon() {
       <span
         style={{
           color: '#fff',
-          fontFamily: 'GeistMono',
+          fontFamily: 'JetBrainsMono',
           fontSize: 17,
           fontWeight: 700,
           letterSpacing: '-0.5px',
@@ -40,7 +37,7 @@ export default function Icon() {
     </div>,
     {
       ...size,
-      fonts: [{ name: 'GeistMono', data: font, weight: 700 }],
+      fonts: [{ name: 'JetBrainsMono', data: font, weight: 700 }],
     },
   )
 }
