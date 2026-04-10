@@ -35,7 +35,7 @@ All design tokens live in `app/globals.css` as Tailwind `@layer components` clas
 - **Interactive**: `.hover-primary`, `.hover-secondary`, `.bg-tag`, `.bg-tag-active`
 - **Structure**: `.border-ui`, `.border-faint`, `.deco-subtle`
 
-Dark mode uses Tailwind `dark:` variants with `next-themes` (class strategy). Color palette is based on stone shades. Font family is Geist (sans + mono).
+Dark mode uses Tailwind `dark:` variants with `next-themes` (class strategy). Color palette is based on stone shades. Font family is JetBrains Mono (loaded via `next/font/google`). The favicon (`app/icon.tsx`) renders "VP" using JetBrains Mono fetched from Google Fonts CDN (`runtime = 'edge'`).
 
 ## Code Style
 
