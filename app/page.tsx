@@ -10,7 +10,7 @@ export default function Home() {
       <section className="space-y-4">
         <h1 className="type-heading fg-primary">Volodymyr Pivoshenko</h1>
         <p className="type-body fg-body">
-          R&D/AI/ML Engineering Lead fascinated by AI, system design, and
+          Principal AI/R&D Engineer fascinated by AI, system design, and
           software development.
         </p>
         <p className="type-body fg-body">
