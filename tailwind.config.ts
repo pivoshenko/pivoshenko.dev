@@ -7,7 +7,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['ui-sans-serif', 'system-ui'],
+        sans: ['var(--font-jetbrains-mono)', 'ui-monospace', 'SFMono-Regular'],
         mono: ['var(--font-jetbrains-mono)', 'ui-monospace', 'SFMono-Regular'],
       },
       typography: (theme: (key: string) => string) => ({

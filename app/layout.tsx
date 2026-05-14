@@ -64,6 +64,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
+      data-scroll-behavior="smooth"
       className={jetbrainsMono.variable}
     >
       <body className="bg-stone-50 text-stone-900 dark:bg-black dark:text-stone-100 font-mono antialiased">
@@ -71,7 +72,7 @@ export default function RootLayout({
           <div className="min-h-screen flex flex-col">
             <ReadingProgress />
             <Nav />
-            <main className="flex-1 w-full max-w-4xl mx-auto px-4 py-6">
+            <main className="flex-1 w-full max-w-6xl mx-auto px-4 py-6">
               {children}
             </main>
             <Footer />

@@ -1,12 +1,22 @@
 format:
-  pnpm format
+    pnpm format
+
+check:
+    pnpm check
 
 lint:
-  pnpm check
-  pnpm build
+    pnpm check
+    pnpm build
 
-test:
-  pnpm test
+dev:
+    pnpm dev
+
+start:
+    pnpm build
+    pnpm start
+
+install:
+    pnpm install
 
 update:
-  pnpm update
+    pnpm update
