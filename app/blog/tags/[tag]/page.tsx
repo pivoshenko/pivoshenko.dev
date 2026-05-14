@@ -73,7 +73,7 @@ export default async function TagPage({ params }: Props) {
                         href={`/blog/tags/${encodeURIComponent(t)}`}
                         className={`type-meta px-1.5 py-0.5 rounded transition-colors ${
                           t === decoded
-                            ? 'bg-tag-active fg-secondary'
+                            ? 'bg-tag-active'
                             : 'bg-tag fg-muted hover-secondary'
                         }`}
                       >
