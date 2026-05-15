@@ -3,7 +3,6 @@ import Link from 'next/link'
 
 export default function Home() {
   const posts = getAllPosts().slice(0, 5)
-  const topics = [...new Set(getAllPosts().flatMap((p) => p.tags))].sort()
 
   return (
     <div className="space-y-16">
@@ -25,19 +24,6 @@ export default function Home() {
         </p>
         <p className="type-body fg-body">
           Outside of work, I enjoy cycling and playing video games to unwind.
-        </p>
-        <p className="type-meta fg-muted">
-          {topics.map((topic, i) => (
-            <span key={topic}>
-              {i > 0 && ' · '}
-              <Link
-                href={`/blog/tags/${encodeURIComponent(topic)}`}
-                className="hover-secondary transition-colors"
-              >
-                {topic}
-              </Link>
-            </span>
-          ))}
         </p>
       </section>
 

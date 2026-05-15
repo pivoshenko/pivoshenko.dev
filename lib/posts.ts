@@ -36,8 +36,7 @@ export function getAllPosts(): PostMeta[] {
       }
     })
     .sort((a, b) => {
-      const dateDiff =
-        new Date(b.date).getTime() - new Date(a.date).getTime()
+      const dateDiff = new Date(b.date).getTime() - new Date(a.date).getTime()
       if (dateDiff !== 0) return dateDiff
       return a.title.localeCompare(b.title)
     })
