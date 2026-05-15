@@ -1,5 +1,6 @@
 import { getAllPosts } from '@/lib/posts'
 import Link from 'next/link'
+import { SectionHeader } from 'pivoshenko.ui'
 
 export default function Home() {
   const posts = getAllPosts().slice(0, 5)
@@ -28,7 +29,7 @@ export default function Home() {
       </section>
 
       <section className="space-y-6">
-        <h2 className="type-label fg-muted">Recent posts</h2>
+        <SectionHeader title="recent posts" count={posts.length} />
 
         {posts.length === 0 ? (
           <p className="type-ui fg-subtle">No posts yet.</p>

@@ -1,7 +1,7 @@
 import { getAllPosts } from '@/lib/posts'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Tag } from 'pivoshenko.ui'
+import { SectionHeader, Tag } from 'pivoshenko.ui'
 
 export const metadata: Metadata = {
   title: 'Blog',
@@ -30,9 +30,7 @@ export default function Blog() {
 
       {years.map((year) => (
         <section key={year} className="space-y-5">
-          <h2 className="type-label fg-muted pb-2 border-b border-faint">
-            {year}
-          </h2>
+          <SectionHeader title={year} count={postsByYear[year].length} />
 
           <div className="space-y-6">
             {postsByYear[year].map((post) => (
