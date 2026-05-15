@@ -1,10 +1,19 @@
+import { createRequire } from 'node:module'
+import { dirname } from 'node:path'
 import typography from '@tailwindcss/typography'
 import morokPreset from 'pivoshenko.ui/tailwind-preset'
 import type { Config } from 'tailwindcss'
 
+const require = createRequire(import.meta.url)
+const uiRoot = dirname(require.resolve('pivoshenko.ui/package.json'))
+
 const config: Config = {
   presets: [morokPreset],
-  content: ['./app/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './app/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+    `${uiRoot}/ui/src/**/*.{ts,tsx}`,
+  ],
   theme: {
     extend: {
       // next/font assigns JetBrains Mono via the CSS variable in app/layout.tsx;
