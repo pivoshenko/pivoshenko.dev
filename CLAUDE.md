@@ -30,6 +30,8 @@ No test framework is configured. The `just lint` task runs `pnpm check && pnpm b
 
 Base design tokens (`type-*`, `fg-*`, `hover-*`, `bg-tag*`, `border-*`, `deco-*`) come from `pivoshenko.ui/ui/globals.css`. Site-local extensions in `app/globals.css` add `.type-post-heading` and `.type-caption` (blog-specific). Shared components — `Footer`, `Nav`, `ThemeToggle`, `PageShell`, `Tag`, etc. — are imported from `pivoshenko.ui`.
 
+`app/layout.tsx` composes the whole chrome via `<PageShell brand="pivoshenko.dev">` with `navLinks={[Home, Blog, Projects]}` and `footerExtras={[rssLink]}` (RSS marker exported from `pivoshenko.ui`). The blog-specific `ReadingProgress` bar sits above `<PageShell>` since it spans the viewport. No local `Nav`/`Footer`/`ThemeToggle` components — see the shared UI invariant in `me/CLAUDE.md`.
+
 Dark mode uses Tailwind `dark:` variants with `next-themes` (class strategy). Color palette is stone grayscale with morok accents from the shared Tailwind preset. Font family is JetBrains Mono (loaded via `next/font/google`). The favicon (`app/icon.tsx`) renders "VP" using JetBrains Mono fetched from Google Fonts CDN (`runtime = 'edge'`).
 
 ## Shared package consumption
