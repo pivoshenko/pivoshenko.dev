@@ -2,6 +2,7 @@ import { getAllPosts, getPostsByTag } from '@/lib/posts'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { Tag } from 'pivoshenko.ui'
 
 interface Props {
   params: Promise<{ tag: string }>
@@ -71,13 +72,9 @@ export default async function TagPage({ params }: Props) {
                       <Link
                         key={t}
                         href={`/blog/tags/${encodeURIComponent(t)}`}
-                        className={`type-meta px-1.5 py-0.5 rounded transition-colors ${
-                          t === decoded
-                            ? 'bg-tag-active'
-                            : 'bg-tag fg-muted hover-secondary'
-                        }`}
+                        className="hover-secondary transition-colors"
                       >
-                        {t}
+                        <Tag active={t === decoded}>{t}</Tag>
                       </Link>
                     ))}
                   </div>
