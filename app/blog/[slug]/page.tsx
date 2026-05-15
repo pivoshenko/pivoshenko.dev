@@ -89,7 +89,7 @@ export default async function BlogPost({ params }: Props) {
   return (
     <>
       <TableOfContents headings={headings} />
-      <article className="space-y-10">
+      <article className="max-w-3xl mx-auto space-y-10">
         <header className="space-y-4">
           <Link
             href="/blog"
