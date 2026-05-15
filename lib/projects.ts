@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react'
-import { Palette, Terminal } from 'lucide-react'
+import { Bot, Palette, Terminal } from 'lucide-react'
 
 export interface Project {
   slug: string
@@ -20,6 +20,15 @@ const projects: Project[] = [
     url: 'https://www.kasetto.dev',
     icon: Terminal,
     tags: ['ai', 'agents', 'claude-code', 'codex', 'skills', 'mcps'],
+  },
+  {
+    slug: 'pivoshenko-ai',
+    title: 'pivoshenko.ai',
+    date: '2026-03-01',
+    description: 'Agents workspace — skills, MCPs, and catalog site.',
+    url: 'https://ai.pivoshenko.dev',
+    icon: Bot,
+    tags: ['ai', 'agents', 'skills', 'mcps', 'claude-code'],
   },
   {
     slug: 'morok',
