@@ -35,7 +35,12 @@ export function getAllPosts(): PostMeta[] {
         tags: (data.tags as string[]) || [],
       }
     })
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .sort((a, b) => {
+      const dateDiff =
+        new Date(b.date).getTime() - new Date(a.date).getTime()
+      if (dateDiff !== 0) return dateDiff
+      return a.title.localeCompare(b.title)
+    })
 }
 
 export function getPostMeta(slug: string): PostMeta | null {
