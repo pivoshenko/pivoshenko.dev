@@ -1,7 +1,7 @@
 import { getAllPosts } from '@/lib/posts'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { SectionHeader, Tag } from 'pivoshenko.ui'
+import { SectionHeader } from 'pivoshenko.ui'
 
 export const metadata: Metadata = {
   title: 'Blog',
@@ -59,9 +59,9 @@ export default function Blog() {
                           <Link
                             key={tag}
                             href={`/blog/tags/${encodeURIComponent(tag)}`}
-                            className="hover-secondary transition-colors"
+                            className="inline-flex items-center font-mono text-xs px-1.5 py-0.5 rounded transition-colors bg-tag fg-muted hover-secondary"
                           >
-                            <Tag>{tag}</Tag>
+                            {tag}
                           </Link>
                         ))}
                       </div>
