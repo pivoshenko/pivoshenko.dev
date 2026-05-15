@@ -89,7 +89,7 @@ export default async function BlogPost({ params }: Props) {
   return (
     <>
       <TableOfContents headings={headings} />
-      <article className="max-w-3xl mx-auto space-y-10">
+      <article className="space-y-10">
         <header className="space-y-4">
           <Link
             href="/blog"
@@ -123,7 +123,7 @@ export default async function BlogPost({ params }: Props) {
 
         <hr className="border-ui" />
 
-        <div className="prose prose-stone dark:prose-invert prose-sm max-w-prose">
+        <div className="prose prose-stone dark:prose-invert prose-sm max-w-none">
           <MDXContent />
         </div>
       </article>
