@@ -28,14 +28,18 @@ No test framework is configured. The `just lint` task runs `pnpm check && pnpm b
 
 ## Design System
 
-All design tokens live in `app/globals.css` as Tailwind `@layer components` classes:
+Base design tokens (`type-*`, `fg-*`, `hover-*`, `bg-tag*`, `border-*`, `deco-*`) come from `pivoshenko.ui/ui/globals.css`. Site-local extensions in `app/globals.css` add `.type-post-heading` and `.type-caption` (blog-specific). Shared components — `Footer`, `Nav`, `ThemeToggle`, `PageShell`, `Tag`, etc. — are imported from `pivoshenko.ui`.
 
-- **Typography**: `.type-heading`, `.type-post-heading`, `.type-body`, `.type-ui`, `.type-label`, `.type-meta`, `.type-caption`, `.type-logo`
-- **Colors**: `.fg-primary`, `.fg-title`, `.fg-secondary`, `.fg-body`, `.fg-subtle`, `.fg-muted`
-- **Interactive**: `.hover-primary`, `.hover-secondary`, `.bg-tag`, `.bg-tag-active`
-- **Structure**: `.border-ui`, `.border-faint`, `.deco-subtle`
+Dark mode uses Tailwind `dark:` variants with `next-themes` (class strategy). Color palette is stone grayscale with morok accents from the shared Tailwind preset. Font family is JetBrains Mono (loaded via `next/font/google`). The favicon (`app/icon.tsx`) renders "VP" using JetBrains Mono fetched from Google Fonts CDN (`runtime = 'edge'`).
 
-Dark mode uses Tailwind `dark:` variants with `next-themes` (class strategy). Color palette is based on stone shades. Font family is JetBrains Mono (loaded via `next/font/google`). The favicon (`app/icon.tsx`) renders "VP" using JetBrains Mono fetched from Google Fonts CDN (`runtime = 'edge'`).
+## Shared package consumption
+
+This site pins `pivoshenko.ui` via git tag in `package.json`. See parent `me/CLAUDE.md` for the cross-cutting pattern and local-override workflow.
+
+- `biome.json` extends `./node_modules/pivoshenko.ui/config/biome.json`
+- `tsconfig.json` extends `pivoshenko.ui/tsconfig.base.json`
+- `tailwind.config.ts` uses `pivoshenko.ui/tailwind-preset` + content glob pointing at the package source. Adds `@tailwindcss/typography` plugin + prose tokens for blog posts (site-local extension allowed).
+- `next.config.ts` needs `transpilePackages: ['pivoshenko.ui']`
 
 ## Code Style
 
