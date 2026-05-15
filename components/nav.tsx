@@ -8,6 +8,7 @@ import { ThemeToggle } from './theme-toggle'
 const links = [
   { href: '/', label: 'Home' },
   { href: '/blog', label: 'Blog' },
+  { href: '/projects', label: 'Projects' },
   // for now I disable it since I need to rewrite it
   // { href: '/about', label: 'About' },
 ]
