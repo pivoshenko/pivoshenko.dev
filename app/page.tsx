@@ -1,9 +1,11 @@
 import { getAllPosts } from '@/lib/posts'
+import { getAllProjects } from '@/lib/projects'
 import Link from 'next/link'
 import { SectionHeader } from 'pivoshenko.ui'
 
 export default function Home() {
   const posts = getAllPosts().slice(0, 5)
+  const projects = getAllProjects().slice(0, 5)
 
   return (
     <div className="space-y-16">
@@ -26,6 +28,57 @@ export default function Home() {
         <p className="type-body fg-body">
           Outside of work, I enjoy cycling and playing video games to unwind.
         </p>
+      </section>
+
+      <section className="space-y-6">
+        <SectionHeader title="recent projects" count={projects.length} />
+
+        {projects.length === 0 ? (
+          <p className="type-ui fg-subtle">No projects yet.</p>
+        ) : (
+          <div className="space-y-3">
+            {projects.map((project) => {
+              const Icon = project.icon
+              return (
+                <a
+                  key={project.slug}
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-baseline gap-5"
+                >
+                  <span className="type-meta fg-muted w-20 shrink-0 tabular-nums">
+                    {new Date(project.date).toLocaleDateString('en-US', {
+                      month: 'short',
+                      year: 'numeric',
+                    })}
+                  </span>
+                  <span className="inline-flex items-baseline gap-2 min-w-0">
+                    <Icon
+                      className="w-4 h-4 fg-muted shrink-0 self-center"
+                      strokeWidth={1.5}
+                    />
+                    <span className="type-ui fg-secondary group-hover:text-stone-900 dark:group-hover:text-stone-100 transition-colors underline-offset-2 group-hover:underline deco-subtle">
+                      {project.title}
+                    </span>
+                    {project.description && (
+                      <span className="type-meta fg-muted">
+                        — {project.description}
+                      </span>
+                    )}
+                  </span>
+                </a>
+              )
+            })}
+          </div>
+        )}
+
+        <Link
+          href="/projects"
+          className="inline-block type-meta fg-muted hover-secondary transition-colors"
+        >
+          All projects →
+        </Link>
       </section>
 
       <section className="space-y-6">
