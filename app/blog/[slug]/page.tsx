@@ -12,7 +12,6 @@ import { evaluate } from '@mdx-js/mdx'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { Tag } from 'pivoshenko.ui'
 import * as runtime from 'react/jsx-runtime'
 import remarkGfm from 'remark-gfm'
 
@@ -112,9 +111,9 @@ export default async function BlogPost({ params }: Props) {
                 <Link
                   key={tag}
                   href={`/blog/tags/${encodeURIComponent(tag)}`}
-                  className="hover-secondary transition-colors"
+                  className="inline-flex items-center font-mono text-xs px-1.5 py-0.5 rounded transition-colors bg-tag fg-muted hover-secondary"
                 >
-                  <Tag>{tag}</Tag>
+                  {tag}
                 </Link>
               ))}
             </div>
