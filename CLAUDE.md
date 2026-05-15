@@ -41,6 +41,10 @@ This site pins `pivoshenko.ui` via git tag in `package.json`. See parent `me/CLA
 - `tailwind.config.ts` uses `pivoshenko.ui/tailwind-preset` + content glob pointing at the package source. Adds `@tailwindcss/typography` plugin + prose tokens for blog posts (site-local extension allowed).
 - `next.config.ts` needs `transpilePackages: ['pivoshenko.ui']`
 
+## Required env vars
+
+None. `@vercel/analytics` and `@vercel/speed-insights` are wired via the Vercel integration and require no user-managed env vars. The Google Fonts CDN fetch in `app/icon.tsx` is unauthenticated. If a future build needs a secret, add it here as: name · purpose · scope (build/runtime) · visibility (`NEXT_PUBLIC_` public vs secret).
+
 ## Code Style
 
 - **Formatter/Linter**: Biome (not ESLint/Prettier). Single quotes, trailing commas, no semicolons, 2-space indent, 80 char line width.
