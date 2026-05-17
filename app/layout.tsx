@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: 'Volodymyr Pivoshenko',
     description:
       'Practical notes on software engineering, distributed systems, and developer tooling.',
