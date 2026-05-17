@@ -45,25 +45,27 @@ export default function Home() {
                   href={project.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-baseline gap-5"
+                  className="group flex items-start gap-5"
                 >
-                  <span className="type-meta fg-muted w-20 shrink-0 tabular-nums">
+                  <span className="type-meta fg-muted w-20 shrink-0 mt-px tabular-nums">
                     {new Date(project.date).toLocaleDateString('en-US', {
                       month: 'short',
                       year: 'numeric',
                     })}
                   </span>
-                  <span className="inline-flex items-baseline gap-2 min-w-0">
-                    <Icon
-                      className="w-4 h-4 fg-muted shrink-0 self-center"
-                      strokeWidth={1.5}
-                    />
-                    <span className="type-ui fg-secondary group-hover:text-stone-900 dark:group-hover:text-stone-100 transition-colors underline-offset-2 group-hover:underline deco-subtle">
-                      {project.title}
+                  <span className="block min-w-0 flex-1">
+                    <span className="inline-flex items-center gap-2 align-baseline">
+                      <Icon
+                        className="w-4 h-4 fg-muted shrink-0"
+                        strokeWidth={1.5}
+                      />
+                      <span className="type-ui fg-secondary group-hover:text-stone-900 dark:group-hover:text-stone-100 transition-colors underline-offset-2 group-hover:underline deco-subtle">
+                        {project.title}
+                      </span>
                     </span>
                     {project.description && (
-                      <span className="type-meta fg-muted">
-                        — {project.description}
+                      <span className="block type-meta fg-muted mt-0.5">
+                        {project.description}
                       </span>
                     )}
                   </span>
