@@ -31,7 +31,7 @@ export default function Home() {
       </section>
 
       <section className="space-y-6">
-        <SectionHeader title="recent projects" count={projects.length} />
+        <SectionHeader title="recent projects" />
 
         {projects.length === 0 ? (
           <p className="type-ui fg-subtle">No projects yet.</p>
@@ -84,7 +84,7 @@ export default function Home() {
       </section>
 
       <section className="space-y-6">
-        <SectionHeader title="recent posts" count={posts.length} />
+        <SectionHeader title="recent posts" />
 
         {posts.length === 0 ? (
           <p className="type-ui fg-subtle">No posts yet.</p>
