@@ -32,7 +32,7 @@ Base design tokens (`type-*`, `fg-*`, `hover-*`, `bg-tag*`, `border-*`, `deco-*`
 
 `app/layout.tsx` composes the whole chrome via `<PageShell brand="pivoshenko.dev">` with `navLinks={[Home, Blog, Projects]}` and `footerExtras={[rssLink]}` (RSS marker exported from `pivoshenko.ui`). The blog-specific `ReadingProgress` bar sits above `<PageShell>` since it spans the viewport. No local `Nav`/`Footer`/`ThemeToggle` components — see the shared UI invariant in `me/CLAUDE.md`.
 
-Dark mode uses Tailwind `dark:` variants with `next-themes` (class strategy). Color palette is stone grayscale with morok accents from the shared Tailwind preset. Font family is JetBrains Mono (loaded via `next/font/google`). The favicon (`app/icon.tsx`) renders "VP" using JetBrains Mono fetched from Google Fonts CDN (`runtime = 'edge'`).
+Dark mode uses Tailwind `dark:` variants with `next-themes` (class strategy). Color palette is stone grayscale with morok accents from the shared Tailwind preset. Font family is JetBrains Mono (loaded via `next/font/google`). The favicon (`app/icon.tsx`) renders "VP" via `ImageResponse` (`next/og`) using a hardcoded generic monospace stack (`ui-monospace, SFMono-Regular, …`) — no external font fetch, no `runtime` export.
 
 ## Shared package consumption
 
@@ -45,7 +45,7 @@ This site pins `pivoshenko.ui` via git tag in `package.json`. See parent `me/CLA
 
 ## Content conventions
 
-Frontmatter contract, loader pattern, tag rules, and sort order are specified in `openspec/specs/site-content-conventions/spec.md`. Quick summary for posts:
+Frontmatter contract, loader pattern, tag rules, and sort order for posts:
 
 - Required keys: `title`, `date` (ISO `YYYY-MM-DD`), `description`, `tags`.
 - Tags: lowercase, kebab-case, single word where possible (`^[a-z0-9]+(-[a-z0-9]+)*$`).
@@ -54,7 +54,7 @@ Frontmatter contract, loader pattern, tag rules, and sort order are specified in
 
 ## Required env vars
 
-None. `@vercel/analytics` and `@vercel/speed-insights` are wired via the Vercel integration and require no user-managed env vars. The Google Fonts CDN fetch in `app/icon.tsx` is unauthenticated. If a future build needs a secret, add it here as: name · purpose · scope (build/runtime) · visibility (`NEXT_PUBLIC_` public vs secret).
+None. `@vercel/analytics` and `@vercel/speed-insights` are wired via the Vercel integration and require no user-managed env vars. If a future build needs a secret, add it here as: name · purpose · scope (build/runtime) · visibility (`NEXT_PUBLIC_` public vs secret).
 
 ## Code Style
 
