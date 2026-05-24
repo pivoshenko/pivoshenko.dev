@@ -16,7 +16,7 @@ pnpm format           # Biome format (auto-fix)
 pnpm check            # Biome full check (lint + format + imports)
 ```
 
-No test framework is configured. The `just lint` task runs `pnpm check && pnpm build`.
+No test framework is configured. `just lint` runs Biome lint only; `just check` is the full gate (`pnpm check && pnpm build`).
 
 ## Architecture
 
