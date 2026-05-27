@@ -1,11 +1,12 @@
 import { getAllPosts } from '@/lib/posts'
-import { getAllProjects } from '@/lib/projects'
+import { getAllProjectsWithStars } from '@/lib/projects'
+import { Star } from 'lucide-react'
 import Link from 'next/link'
 import { SectionHeader } from 'pivoshenko.ui'
 
-export default function Home() {
+export default async function Home() {
   const posts = getAllPosts().slice(0, 5)
-  const projects = getAllProjects().slice(0, 5)
+  const projects = (await getAllProjectsWithStars()).slice(0, 3)
 
   return (
     <div className="space-y-16">
@@ -28,59 +29,6 @@ export default function Home() {
         <p className="type-body fg-body">
           Outside of work, I enjoy cycling and playing video games to unwind.
         </p>
-      </section>
-
-      <section className="space-y-6">
-        <SectionHeader title="recent projects" />
-
-        {projects.length === 0 ? (
-          <p className="type-ui fg-subtle">No projects yet.</p>
-        ) : (
-          <div className="space-y-3">
-            {projects.map((project) => {
-              const Icon = project.icon
-              return (
-                <a
-                  key={project.slug}
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-start gap-5"
-                >
-                  <span className="type-meta fg-muted w-20 shrink-0 mt-px tabular-nums">
-                    {new Date(project.date).toLocaleDateString('en-US', {
-                      month: 'short',
-                      year: 'numeric',
-                    })}
-                  </span>
-                  <span className="block min-w-0 flex-1">
-                    <span className="inline-flex items-center gap-2 align-baseline">
-                      <Icon
-                        className="w-4 h-4 fg-muted shrink-0"
-                        strokeWidth={1.5}
-                      />
-                      <span className="type-ui fg-secondary group-hover:text-stone-900 dark:group-hover:text-stone-100 transition-colors underline-offset-2 group-hover:underline deco-subtle">
-                        {project.title}
-                      </span>
-                    </span>
-                    {project.description && (
-                      <span className="block type-meta fg-muted mt-0.5">
-                        {project.description}
-                      </span>
-                    )}
-                  </span>
-                </a>
-              )
-            })}
-          </div>
-        )}
-
-        <Link
-          href="/projects"
-          className="inline-block type-meta fg-muted hover-secondary transition-colors"
-        >
-          All projects →
-        </Link>
       </section>
 
       <section className="space-y-6">
@@ -115,6 +63,65 @@ export default function Home() {
           className="inline-block type-meta fg-muted hover-secondary transition-colors"
         >
           All posts →
+        </Link>
+      </section>
+
+      <section className="space-y-6">
+        <SectionHeader title="recent projects" />
+
+        {projects.length === 0 ? (
+          <p className="type-ui fg-subtle">No projects yet.</p>
+        ) : (
+          <div className="space-y-3">
+            {projects.map((project) => {
+              const Icon = project.icon
+              return (
+                <a
+                  key={project.slug}
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-start gap-5"
+                >
+                  <span className="type-meta fg-muted w-20 shrink-0 mt-px tabular-nums">
+                    {new Date(project.date).toLocaleDateString('en-US', {
+                      month: 'short',
+                      year: 'numeric',
+                    })}
+                  </span>
+                  <span className="block min-w-0 flex-1">
+                    <span className="inline-flex items-center gap-2 align-baseline">
+                      <Icon
+                        className="w-4 h-4 fg-muted shrink-0"
+                        strokeWidth={1.5}
+                      />
+                      <span className="type-ui fg-secondary group-hover:text-stone-900 dark:group-hover:text-stone-100 transition-colors underline-offset-2 group-hover:underline deco-subtle">
+                        {project.title}
+                      </span>
+                      {typeof project.stars === 'number' && (
+                        <span className="inline-flex items-center gap-0.5 type-meta fg-muted tabular-nums">
+                          <Star className="w-3 h-3" strokeWidth={1.5} />
+                          {project.stars}
+                        </span>
+                      )}
+                    </span>
+                    {project.description && (
+                      <span className="block type-meta fg-muted mt-0.5">
+                        {project.description}
+                      </span>
+                    )}
+                  </span>
+                </a>
+              )
+            })}
+          </div>
+        )}
+
+        <Link
+          href="/projects"
+          className="inline-block type-meta fg-muted hover-secondary transition-colors"
+        >
+          All projects →
         </Link>
       </section>
     </div>

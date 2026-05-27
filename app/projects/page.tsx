@@ -1,4 +1,5 @@
-import { getAllProjects } from '@/lib/projects'
+import { getAllProjectsWithStars } from '@/lib/projects'
+import { Star } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SectionHeader } from 'pivoshenko.ui'
@@ -8,8 +9,8 @@ export const metadata: Metadata = {
   description: 'Side projects, open source, and personal experiments.',
 }
 
-export default function Projects() {
-  const projects = getAllProjects()
+export default async function Projects() {
+  const projects = await getAllProjectsWithStars()
 
   const projectsByYear: Record<string, typeof projects> = {}
   for (const project of projects) {
@@ -61,6 +62,12 @@ export default function Projects() {
                           <h3 className="type-ui fg-title group-hover:underline underline-offset-2 deco-subtle">
                             {project.title}
                           </h3>
+                          {typeof project.stars === 'number' && (
+                            <span className="inline-flex items-center gap-0.5 type-meta fg-muted tabular-nums">
+                              <Star className="w-3 h-3" strokeWidth={1.5} />
+                              {project.stars}
+                            </span>
+                          )}
                         </div>
                         {project.description && (
                           <p className="type-caption fg-subtle mt-0.5">
