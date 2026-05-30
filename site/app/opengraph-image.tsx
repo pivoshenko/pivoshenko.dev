@@ -50,20 +50,17 @@ export default async function OpengraphImage() {
             maxWidth: 980,
           }}
         >
-          practical notes on software engineering, distributed systems, and
-          developer tooling.
+          Tech blog
         </div>
       </div>
       <div
         style={{
           display: 'flex',
-          justifyContent: 'space-between',
           fontSize: 24,
           color: '#8a8a85',
         }}
       >
         <span>pivoshenko.dev</span>
-        <span>blog · projects</span>
       </div>
     </div>,
     {

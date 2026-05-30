@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     default: 'Volodymyr Pivoshenko',
   },
   description:
-    'Practical notes on software engineering, distributed systems, and developer tooling.',
+    'Tech blog',
   keywords: [
     'Volodymyr Pivoshenko',
     'software engineering',
@@ -42,14 +42,14 @@ export const metadata: Metadata = {
     siteName: 'pivoshenko.dev',
     title: 'Volodymyr Pivoshenko',
     description:
-      'Practical notes on software engineering, distributed systems, and developer tooling.',
+      'Tech blog',
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Volodymyr Pivoshenko',
     description:
-      'Practical notes on software engineering, distributed systems, and developer tooling.',
+      'Tech blog',
   },
 }
 
