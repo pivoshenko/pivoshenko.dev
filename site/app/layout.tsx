@@ -1,24 +1,21 @@
 import { ReadingProgress } from '@/components/reading-progress'
-import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import type { Metadata } from 'next'
-import { JetBrains_Mono } from 'next/font/google'
-import { PageShell, rssLink } from 'pivoshenko.ui'
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains-mono',
-})
-import { ThemeProvider } from 'next-themes'
+import { rssLink } from 'pivoshenko.ui'
+import {
+  siteViewport,
+  siteMetadata,
+  SiteLayout,
+} from 'pivoshenko.ui/next/site-layout'
 import './globals.css'
 
-export const metadata: Metadata = {
-  metadataBase: new URL('https://pivoshenko.dev'),
-  title: {
-    template: '%s — Volodymyr Pivoshenko',
-    default: 'Volodymyr Pivoshenko',
-  },
-  description: 'Tech blog',
+export const metadata = {
+  ...siteMetadata({
+    url: 'https://pivoshenko.dev',
+    brand: 'pivoshenko.dev',
+    title: 'Volodymyr Pivoshenko',
+    titleTemplate: '%s — Volodymyr Pivoshenko',
+    description: 'Tech blog',
+  }),
   keywords: [
     'Volodymyr Pivoshenko',
     'software engineering',
@@ -35,20 +32,9 @@ export const metadata: Metadata = {
       'application/rss+xml': 'https://pivoshenko.dev/rss.xml',
     },
   },
-  openGraph: {
-    type: 'website',
-    url: 'https://pivoshenko.dev',
-    siteName: 'pivoshenko.dev',
-    title: 'Volodymyr Pivoshenko',
-    description: 'Tech blog',
-    locale: 'en_US',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Volodymyr Pivoshenko',
-    description: 'Tech blog',
-  },
 }
+
+export const viewport = siteViewport
 
 export default function RootLayout({
   children,
@@ -56,30 +42,18 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      data-scroll-behavior="smooth"
-      className={jetbrainsMono.variable}
+    <SiteLayout
+      brand="pivoshenko.dev"
+      navLinks={[
+        { href: '/', label: 'Home' },
+        { href: '/blog', label: 'Blog' },
+        { href: '/projects', label: 'Projects' },
+      ]}
+      footerExtras={[rssLink]}
+      beforeShell={<ReadingProgress />}
+      afterShell={<SpeedInsights />}
     >
-      <body className="bg-stone-50 text-stone-900 dark:bg-black dark:text-stone-100 font-mono antialiased">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <ReadingProgress />
-          <PageShell
-            brand="pivoshenko.dev"
-            navLinks={[
-              { href: '/', label: 'Home' },
-              { href: '/blog', label: 'Blog' },
-              { href: '/projects', label: 'Projects' },
-            ]}
-            footerExtras={[rssLink]}
-          >
-            {children}
-          </PageShell>
-        </ThemeProvider>
-        <Analytics />
-        <SpeedInsights />
-      </body>
-    </html>
+      {children}
+    </SiteLayout>
   )
 }

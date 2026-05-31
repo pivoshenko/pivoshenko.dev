@@ -1,9 +1,9 @@
 import type { NextConfig } from 'next'
+import { baseNextConfig } from 'pivoshenko.ui/next/config'
 
 const config: NextConfig = {
-  reactStrictMode: true,
+  ...baseNextConfig,
   pageExtensions: ['ts', 'tsx', 'mdx'],
-  transpilePackages: ['pivoshenko.ui'],
 }
 
 export default config

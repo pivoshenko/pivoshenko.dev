@@ -39,7 +39,7 @@ export function TableOfContents({ headings }: Props) {
   return (
     <div ref={containerRef} className="fixed bottom-6 left-6 z-50">
       {open && (
-        <div className="mb-2 w-64 max-h-72 overflow-y-auto border border-ui bg-stone-50 dark:bg-black">
+        <div className="mb-2 w-64 max-h-72 overflow-y-auto border border-ui bg-bg-surface">
           <div className="px-3 py-2 border-b border-ui">
             <span className="type-meta fg-muted">Contents</span>
           </div>
@@ -65,7 +65,7 @@ export function TableOfContents({ headings }: Props) {
         onClick={() => setOpen((v) => !v)}
         aria-label="Table of contents"
         aria-expanded={open}
-        className="w-8 h-8 flex items-center justify-center border border-ui fg-muted hover-secondary transition-colors bg-stone-50 dark:bg-black"
+        className="w-8 h-8 flex items-center justify-center border border-ui fg-muted hover-secondary transition-colors bg-bg-surface"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

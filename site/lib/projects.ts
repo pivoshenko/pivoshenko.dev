@@ -46,10 +46,10 @@ const projects: Project[] = [
   },
   {
     slug: 'morok',
-    title: 'Morok & Popil',
+    title: 'Morok, Popil & Vatra',
     date: '2026-03-01',
     description:
-      'Themes focused on minimalism, simplicity, and cross-tool consistency (20+ ports).',
+      'Three-flavor brand theme (pitch black, warm ash, gruvbox-warm) focused on minimalism, simplicity, and cross-tool consistency (20+ ports).',
     url: 'https://theme.pivoshenko.dev',
     icon: Palette,
     tags: ['theme', 'design-system'],

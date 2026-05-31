@@ -122,7 +122,7 @@ export default async function BlogPost({ params }: Props) {
 
         <hr className="border-ui" />
 
-        <div className="prose prose-stone dark:prose-invert prose-sm max-w-none">
+        <div className="prose prose-invert prose-sm max-w-none">
           <MDXContent />
         </div>
       </article>

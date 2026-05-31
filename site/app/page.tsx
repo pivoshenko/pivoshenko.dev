@@ -50,7 +50,7 @@ export default async function Home() {
                     year: 'numeric',
                   })}
                 </span>
-                <span className="type-ui fg-secondary group-hover:text-stone-900 dark:group-hover:text-stone-100 transition-colors underline-offset-2 group-hover:underline deco-subtle">
+                <span className="type-ui fg-secondary group-hover:text-fg-default transition-colors underline-offset-2 group-hover:underline deco-subtle">
                   {post.title}
                 </span>
               </Link>
@@ -95,7 +95,7 @@ export default async function Home() {
                         className="w-4 h-4 fg-muted shrink-0"
                         strokeWidth={1.5}
                       />
-                      <span className="type-ui fg-secondary group-hover:text-stone-900 dark:group-hover:text-stone-100 transition-colors underline-offset-2 group-hover:underline deco-subtle">
+                      <span className="type-ui fg-secondary group-hover:text-fg-default transition-colors underline-offset-2 group-hover:underline deco-subtle">
                         {project.title}
                       </span>
                       {typeof project.stars === 'number' && (

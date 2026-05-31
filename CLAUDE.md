@@ -43,7 +43,7 @@ Base design tokens (`type-*`, `fg-*`, `hover-*`, `bg-tag*`, `border-*`, `deco-*`
 
 `site/app/layout.tsx` composes the whole chrome via `<PageShell brand="pivoshenko.dev">` with `navLinks={[Home, Blog, Projects]}` and `footerExtras={[rssLink]}` (RSS marker exported from `pivoshenko.ui`). The blog-specific `ReadingProgress` bar sits above `<PageShell>` since it spans the viewport. No local `Nav`/`Footer`/`ThemeToggle` components — see the shared UI invariant in parent `CLAUDE.md`.
 
-Dark mode uses Tailwind `dark:` variants with `next-themes` (class strategy). Color palette is stone grayscale with morok accents from the shared Tailwind preset. Font family is JetBrains Mono (loaded via `next/font/google`). The favicon (`site/app/icon.tsx`) renders "VP" via `ImageResponse` (`next/og`) using a hardcoded generic monospace stack (`ui-monospace, SFMono-Regular, …`) — no external font fetch, no `runtime` export.
+Single dark theme (`popil`, warm-ash) — light mode and `next-themes` were removed. Colors come from the role-based `pivoshenko.ui/tailwind-preset` (`bg-bg-canvas`, `text-fg-default`, `text-accent-*`) backed by CSS vars in `pivoshenko.ui/ui/tokens.css`. Flavor is selected via `data-flavor="popil"` on `<html>` in `app/layout.tsx`. Font family is JetBrains Mono (loaded via `next/font/google`). The favicon (`site/app/icon.tsx`) renders "VP" via `ImageResponse` (`next/og`) using a hardcoded generic monospace stack (`ui-monospace, SFMono-Regular, …`) — no external font fetch, no `runtime` export.
 
 ## Shared package consumption
 

@@ -1,5 +1,6 @@
 'use client'
 
+import { ProgressBar } from 'pivoshenko.ui'
 import { useEffect, useState } from 'react'
 
 export function ReadingProgress() {
@@ -18,11 +19,8 @@ export function ReadingProgress() {
   }, [])
 
   return (
-    <div className="fixed top-0 left-0 right-0 h-[2px] z-50">
-      <div
-        className="h-full bg-stone-900 dark:bg-stone-100 transition-none"
-        style={{ width: `${progress}%` }}
-      />
+    <div className="fixed top-0 left-0 right-0 z-50">
+      <ProgressBar value={progress} />
     </div>
   )
 }
