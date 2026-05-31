@@ -17,15 +17,17 @@ The Vercel project's **Root Directory** is set to `site/` in the dashboard.
 Run everything through the root `justfile` — it shells out to `pnpm -C site …`:
 
 ```bash
+just install          # pnpm install
 just dev              # Dev server with Turbopack
 just build            # Production build
 just lint             # Biome lint
 just format           # Biome format (auto-fix)
+just audit            # pnpm audit (CI gate alongside lint + build)
 just check            # Full gate: biome check + next build
 just update           # Bump dependencies
 ```
 
-No test framework is configured. `just lint` runs Biome lint only; `just check` is the full gate.
+No test framework is configured. `just lint` runs Biome lint only; `just check` is the full gate. CI (`.github/workflows/ci.yaml`) runs `install` → `lint` → `audit` → `build` on push to `main` and on PRs.
 
 ## Architecture
 
