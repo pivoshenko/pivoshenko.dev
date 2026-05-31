@@ -39,11 +39,11 @@ No test framework is configured. `just lint` runs Biome lint only; `just check` 
 
 ## Design System
 
-Base design tokens (`type-*`, `fg-*`, `hover-*`, `bg-tag*`, `border-*`, `deco-*`) come from `pivoshenko.ui/ui/globals.css`. Site-local extensions in `site/app/globals.css` add `.type-post-heading` and `.type-caption` (blog-specific). Shared components — `Footer`, `Nav`, `ThemeToggle`, `PageShell`, `Tag`, etc. — are imported from `pivoshenko.ui`.
+Base design tokens (`type-*`, `fg-*`, `hover-*`, `bg-tag*`, `border-*`, `deco-*`) come from `pivoshenko.ui/ui/globals.css`. Site-local extensions in `site/app/globals.css` add `.type-post-heading` and `.type-caption` (blog-specific). Shared components — `Footer`, `Nav`, `PageShell`, `Tag`, etc. — are imported from `pivoshenko.ui`.
 
-`site/app/layout.tsx` composes the whole chrome via `<PageShell brand="pivoshenko.dev">` with `navLinks={[Home, Blog, Projects]}` and `footerExtras={[rssLink]}` (RSS marker exported from `pivoshenko.ui`). The blog-specific `ReadingProgress` bar sits above `<PageShell>` since it spans the viewport. No local `Nav`/`Footer`/`ThemeToggle` components — see the shared UI invariant in parent `CLAUDE.md`.
+`site/app/layout.tsx` composes the whole shell via `<SiteLayout brand="pivoshenko.dev">` from `pivoshenko.ui/next/site-layout`, with `navLinks={[Home, Blog, Projects]}`, `footerExtras={[rssLink]}` (RSS marker from `pivoshenko.ui`), and `beforeShell={<ReadingProgress/>}` + `afterShell={<SpeedInsights/>}` (blog-specific instrumentation). Metadata comes from `siteMetadata(...)` with site-specific `keywords`/`authors`/`alternates` spread on top. Viewport comes from `siteViewport`. No local `Nav`/`Footer`/`ThemeToggle` components — see the shared UI invariant in parent `CLAUDE.md`.
 
-Single dark theme (`popil`, warm-ash) — light mode and `next-themes` were removed. Colors come from the role-based `pivoshenko.ui/tailwind-preset` (`bg-bg-canvas`, `text-fg-default`, `text-accent-*`) backed by CSS vars in `pivoshenko.ui/ui/tokens.css`. Flavor is selected via `data-flavor="popil"` on `<html>` in `app/layout.tsx`. Font family is JetBrains Mono (loaded via `next/font/google`). The favicon (`site/app/icon.tsx`) renders "VP" via `ImageResponse` (`next/og`) using a hardcoded generic monospace stack (`ui-monospace, SFMono-Regular, …`) — no external font fetch, no `runtime` export.
+Single dark theme (`popil`, warm-ash) — light mode, `next-themes`, and the theme toggle were removed. Colors come from the role-based `pivoshenko.ui/tailwind-preset` (`bg-bg-canvas`, `text-fg-default`, `text-accent-*`) backed by CSS variables in `pivoshenko.ui/ui/tokens.css`. The tokens CSS is scoped to `:root`, so the vendored palette is the active palette — no `data-flavor` attribute on consumers. Font family is JetBrains Mono (loaded via `next/font/google` inside `SiteLayout`). The favicon (`site/app/icon.tsx`) re-exports the shared `pivoshenko.ui/next/icon` handler with locally-declared `size`/`contentType` literals (Next requires route segment exports to be statically parsable).
 
 ## Shared package consumption
 
@@ -51,8 +51,10 @@ This site pins `pivoshenko.ui` via git tag in `site/package.json`. See parent `C
 
 - `site/biome.json` extends `./node_modules/pivoshenko.ui/config/biome.json`
 - `site/tsconfig.json` extends `pivoshenko.ui/tsconfig.base.json`
-- `site/tailwind.config.ts` uses `pivoshenko.ui/tailwind-preset` + content glob pointing at the package source. Adds `@tailwindcss/typography` plugin + prose tokens for blog posts (site-local extension allowed).
-- `site/next.config.ts` needs `transpilePackages: ['pivoshenko.ui']`
+- `site/tailwind.config.ts` uses `pivoshenko.ui/tailwind-preset/site` (preset + JetBrains-Mono fontFamily override) and the `withUiContent()` helper for the content glob. Adds `@tailwindcss/typography` plugin + prose tokens for blog posts (site-local extension allowed).
+- `site/next.config.ts` re-exports `baseNextConfig` from `pivoshenko.ui/next/config` and spreads `pageExtensions: ['ts','tsx','mdx']` on top.
+- `site/postcss.config.mjs` re-exports the shared `pivoshenko.ui/postcss.config.mjs` (one-line).
+- `site/app/opengraph-image.tsx` is a thin wrapper around `createOgImage({brand,title,subtitle,domain})` from `pivoshenko.ui/next/opengraph-image`. Route segment exports (`alt`, `size`, `contentType`, `runtime`) stay literal in the route file.
 
 ## Content conventions
 
