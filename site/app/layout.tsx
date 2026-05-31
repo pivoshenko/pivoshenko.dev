@@ -18,8 +18,7 @@ export const metadata: Metadata = {
     template: '%s — Volodymyr Pivoshenko',
     default: 'Volodymyr Pivoshenko',
   },
-  description:
-    'Tech blog',
+  description: 'Tech blog',
   keywords: [
     'Volodymyr Pivoshenko',
     'software engineering',
@@ -41,15 +40,13 @@ export const metadata: Metadata = {
     url: 'https://pivoshenko.dev',
     siteName: 'pivoshenko.dev',
     title: 'Volodymyr Pivoshenko',
-    description:
-      'Tech blog',
+    description: 'Tech blog',
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Volodymyr Pivoshenko',
-    description:
-      'Tech blog',
+    description: 'Tech blog',
   },
 }
 
