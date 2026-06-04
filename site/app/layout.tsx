@@ -2,9 +2,9 @@ import { ReadingProgress } from '@/components/reading-progress'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { rssLink } from 'pivoshenko.ui'
 import {
-  siteViewport,
-  siteMetadata,
   SiteLayout,
+  siteMetadata,
+  siteViewport,
 } from 'pivoshenko.ui/next/site-layout'
 import './globals.css'
 
