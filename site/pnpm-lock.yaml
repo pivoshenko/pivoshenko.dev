@@ -39,8 +39,8 @@ importers:
         specifier: ^16.2.6
         version: 16.2.6(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       pivoshenko.ui:
-        specifier: github:pivoshenko/pivoshenko.ui#v0.9.1
-        version: https://codeload.github.com/pivoshenko/pivoshenko.ui/tar.gz/d590424d8ca2a731efc6176bc9356466b7f6b550(@vercel/analytics@1.6.1(next@16.2.6(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react@19.2.6))(next@16.2.6(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(tailwindcss@3.4.19)
+        specifier: github:pivoshenko/pivoshenko.ui#v0.9.2
+        version: https://codeload.github.com/pivoshenko/pivoshenko.ui/tar.gz/cd6c2fc12a7a4d792d8020679baecd7016ebbcf4(@vercel/analytics@1.6.1(next@16.2.6(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react@19.2.6))(next@16.2.6(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(tailwindcss@3.4.19)
       react:
         specifier: ^19.2.6
         version: 19.2.6
@@ -1067,9 +1067,9 @@ packages:
     resolution: {integrity: sha512-TfySrs/5nm8fQJDcBDuUng3VOUKsd7S+zqvbOTiGXHfxX4wK31ard+hoNuvkicM/2YFzlpDgABOevKSsB4G/FA==}
     engines: {node: '>= 6'}
 
-  pivoshenko.ui@https://codeload.github.com/pivoshenko/pivoshenko.ui/tar.gz/d590424d8ca2a731efc6176bc9356466b7f6b550:
-    resolution: {tarball: https://codeload.github.com/pivoshenko/pivoshenko.ui/tar.gz/d590424d8ca2a731efc6176bc9356466b7f6b550}
-    version: 0.9.1
+  pivoshenko.ui@https://codeload.github.com/pivoshenko/pivoshenko.ui/tar.gz/cd6c2fc12a7a4d792d8020679baecd7016ebbcf4:
+    resolution: {tarball: https://codeload.github.com/pivoshenko/pivoshenko.ui/tar.gz/cd6c2fc12a7a4d792d8020679baecd7016ebbcf4}
+    version: 0.9.2
     engines: {node: '>=22'}
     peerDependencies:
       '@vercel/analytics': ^1.0.0
@@ -2477,7 +2477,7 @@ snapshots:
 
   pirates@4.0.7: {}
 
-  pivoshenko.ui@https://codeload.github.com/pivoshenko/pivoshenko.ui/tar.gz/d590424d8ca2a731efc6176bc9356466b7f6b550(@vercel/analytics@1.6.1(next@16.2.6(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react@19.2.6))(next@16.2.6(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(tailwindcss@3.4.19):
+  pivoshenko.ui@https://codeload.github.com/pivoshenko/pivoshenko.ui/tar.gz/cd6c2fc12a7a4d792d8020679baecd7016ebbcf4(@vercel/analytics@1.6.1(next@16.2.6(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react@19.2.6))(next@16.2.6(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(tailwindcss@3.4.19):
     dependencies:
       lucide-react: 0.577.0(react@19.2.6)
     optionalDependencies:
