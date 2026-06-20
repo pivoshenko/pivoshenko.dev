@@ -8,3 +8,12 @@ onlyBuiltDependencies:
 
 overrides:
   "postcss@<8.5.10": ">=8.5.10"
+
+# js-yaml <=4.1.1 has a moderate DoS (GHSA-h67p-54hq-rp68) via malicious YAML
+# merge keys. The patched line (>=4.2.0) drops the working safeLoad alias that
+# gray-matter@4.0.3 (unmaintained, latest release) calls to parse frontmatter,
+# so bumping js-yaml breaks the MDX build. We only parse our own trusted post
+# frontmatter — the advisory is not reachable — so ignore it instead.
+auditConfig:
+  ignoreGhsas:
+    - GHSA-h67p-54hq-rp68
