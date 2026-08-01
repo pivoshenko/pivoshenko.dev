@@ -8,6 +8,7 @@ onlyBuiltDependencies:
 
 overrides:
   "postcss@<8.5.10": ">=8.5.10"
+  "sharp@<0.35.0": ">=0.35.0"
 
 # js-yaml <=4.1.1 has a moderate DoS (GHSA-h67p-54hq-rp68) via malicious YAML
 # merge keys. The patched line (>=4.2.0) drops the working safeLoad alias that
