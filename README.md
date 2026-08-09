@@ -8,4 +8,4 @@
 
 ## Overview
 
-My personal tech blog where I share thoughts, experiments, and practical notes on software engineering, AI, and developer tooling.
+My personal tech blog, where I write about software engineering, AI, and developer tooling.
