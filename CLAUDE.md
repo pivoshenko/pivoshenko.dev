@@ -41,13 +41,13 @@ No test framework is configured. `just lint` runs Biome lint only; `just check` 
 
 Base design tokens (`type-*`, `fg-*`, `hover-*`, `bg-tag*`, `border-*`, `deco-*`) come from `pivoshenko.ui/ui/globals.css`. Site-local extensions in `site/app/globals.css` add `.type-post-heading` and `.type-caption` (blog-specific). Shared components (`Footer`, `Nav`, `PageShell`, `Tag`, etc.) are imported from `pivoshenko.ui`.
 
-`site/app/layout.tsx` composes the whole shell via `<SiteLayout brand="pivoshenko.dev">` from `pivoshenko.ui/next/site-layout`, with `navLinks={[Home, Blog, Projects]}`, `footerExtras={[rssLink]}` (RSS marker from `pivoshenko.ui`), and `beforeShell={<ReadingProgress/>}` + `afterShell={<SpeedInsights/>}` (blog-specific instrumentation). Metadata comes from `siteMetadata(...)` with site-specific `keywords`/`authors`/`alternates` spread on top. Viewport comes from `siteViewport`. No local `Nav`/`Footer`/`ThemeToggle` components. See the shared UI invariant in parent `CLAUDE.md`.
+`site/app/layout.tsx` composes the whole shell via `<SiteLayout brand="pivoshenko.dev">` from `pivoshenko.ui/next/site-layout`, with `navLinks={[Home, Blog, Projects]}`, `footerExtras={[rssLink]}` (RSS marker from `pivoshenko.ui`), and `beforeShell={<ReadingProgress/>}` + `afterShell={<SpeedInsights/>}` (blog-specific instrumentation). Metadata comes from `siteMetadata(...)` with site-specific `keywords`/`authors`/`alternates` spread on top. Viewport comes from `siteViewport`. No local `Nav`/`Footer`/`ThemeToggle` components.
 
 Single dark theme (`popil`, warm-ash): light mode, `next-themes`, and the theme toggle were removed. Colors come from the role-based `pivoshenko.ui/tailwind-preset` (`bg-bg-canvas`, `text-fg-default`, `text-accent-*`) backed by CSS variables in `pivoshenko.ui/ui/tokens.css`. The tokens CSS is scoped to `:root`, so the vendored palette is the active palette, with no `data-flavor` attribute on consumers. Font family is JetBrains Mono (loaded via `next/font/google` inside `SiteLayout`). The favicon (`site/app/icon.tsx`) re-exports the shared `pivoshenko.ui/next/icon` handler with locally-declared `size`/`contentType` literals (Next requires route segment exports to be statically parsable).
 
 ## Shared Package Consumption
 
-This site pins `pivoshenko.ui` via git tag in `site/package.json`. See parent `CLAUDE.md` for the cross-cutting pattern and local-override workflow.
+This site pins `pivoshenko.ui` via git tag in `site/package.json`.
 
 - `site/biome.json` extends `./node_modules/pivoshenko.ui/config/biome.json`
 - `site/tsconfig.json` extends `pivoshenko.ui/tsconfig.base.json`
