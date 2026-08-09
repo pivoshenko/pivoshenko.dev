@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'About',
-  description: 'About Volodymyr Pivoshenko — software engineer.',
+  description: 'About Volodymyr Pivoshenko, software engineer.',
 }
 
 const links = [

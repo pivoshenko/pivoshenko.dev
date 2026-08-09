@@ -39,7 +39,7 @@ const projects: Project[] = [
     slug: 'pivoshenko-ai',
     title: 'pivoshenko.ai',
     date: '2026-03-01',
-    description: 'Agents workspace — skills, MCPs, and catalog site.',
+    description: 'Agents workspace: skills, MCPs, and catalog site.',
     url: 'https://ai.pivoshenko.dev',
     icon: Bot,
     tags: ['ai', 'agents', 'skills', 'mcps', 'claude-code'],

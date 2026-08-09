@@ -1,7 +1,7 @@
 ---
 title: Hardening an OpenClaw VPS - Zero Trust Setup with Tailscale
 date: 2026-02-28
-description: A step-by-step guide to securing a fresh Ubuntu VPS with layered defence — Tailscale as the private network, UFW as the firewall, SSH hardening, and fail2ban for intrusion prevention.
+description: A step-by-step guide to securing a fresh Ubuntu VPS with layered defence. Tailscale as the private network, UFW as the firewall, SSH hardening, and fail2ban for intrusion prevention.
 tags: [vps, tailscale, security, linux, ssh, devops, ai, openclaw]
 ---
 
@@ -99,7 +99,7 @@ Test and apply:
 sshd -t && systemctl restart ssh
 ```
 
-> **Ubuntu 24.04 gotcha:** Ubuntu 24.04 uses systemd socket activation for SSH. This means `ListenAddress` in `sshd_config` is ignored — the socket unit controls which interface SSH binds to. You must override it separately:
+> **Ubuntu 24.04 gotcha:** Ubuntu 24.04 uses systemd socket activation for SSH. This means `ListenAddress` in `sshd_config` is ignored. The socket unit controls which interface SSH binds to. You must override it separately:
 
 ```bash
 mkdir -p /etc/systemd/system/ssh.socket.d
@@ -196,9 +196,9 @@ systemctl enable fail2ban && systemctl restart fail2ban
 
 The `ignoreip` line ensures Tailscale addresses (`100.64.0.0/10`) are never accidentally banned.
 
-> **Ubuntu 24.04 gotcha:** Ubuntu ships `/etc/fail2ban/jail.d/defaults-debian.conf` which sets `backend = systemd`. This means fail2ban reads only from the systemd journal, not from `/var/log/auth.log`. Setting `backend = auto` in `jail.local` overrides this and makes fail2ban read log files directly — which is more reliable and catches attacks even if the journal is rotated or truncated.
+> **Ubuntu 24.04 gotcha:** Ubuntu ships `/etc/fail2ban/jail.d/defaults-debian.conf` which sets `backend = systemd`. This means fail2ban reads only from the systemd journal, not from `/var/log/auth.log`. Setting `backend = auto` in `jail.local` overrides this and makes fail2ban read log files directly, which is more reliable and catches attacks even if the journal is rotated or truncated.
 
-The `recidive` jail watches fail2ban's own log. Any IP that gets banned 3 or more times within 24 hours is blocked on **all ports** for 7 days — catching scanners that rotate through different exploits.
+The `recidive` jail watches fail2ban's own log. Any IP that gets banned 3 or more times within 24 hours is blocked on **all ports** for 7 days, which catches scanners that rotate through different exploits.
 
 Check status:
 
@@ -233,7 +233,7 @@ If you plan to run Docker containers, be aware that **Docker bypasses UFW** by w
 The fix: always put **Nginx as a reverse proxy** in front of your containers, bind Docker to localhost only, and let Nginx handle the public-facing ports that UFW allows.
 
 ```bash
-# Bind container to localhost only — Nginx proxies it publicly
+# Bind container to localhost only. Nginx proxies it publicly
 docker run -p 127.0.0.1:3000:3000 myapp
 ```
 
