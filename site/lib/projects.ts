@@ -30,7 +30,7 @@ const projects: Project[] = [
     title: 'Kasetto',
     date: '2026-03-01',
     description: 'Declarative AI agent environment manager.',
-    url: 'https://www.kasetto.dev',
+    url: 'https://kasetto.dev',
     icon: Terminal,
     tags: ['ai', 'agents', 'claude-code', 'codex', 'skills', 'mcps'],
     repo: 'pivoshenko/kasetto',
