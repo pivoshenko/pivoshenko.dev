@@ -13,7 +13,7 @@ export default async function Home() {
       <section className="space-y-4">
         <h1 className="type-heading fg-primary">Volodymyr Pivoshenko</h1>
         <p className="type-body fg-body">
-          Principal AI/R&D Engineer fascinated by AI, system design, and
+          Principal AI/ML R&D Engineer fascinated by AI, system design, and
           software development.
         </p>
         <p className="type-body fg-body">
