@@ -19,7 +19,7 @@ Everything goes through the root `justfile`, which shells out to `pnpm -C site .
 ```bash
 just install   # pnpm install
 just run-dev-server       # next dev --turbopack
-just build     # next build (this is also the typecheck — no separate tsc script)
+just build     # next build (this is also the typecheck - no separate tsc script)
 just lint      # biome lint .
 just format    # biome check . --write (format + lint autofix + import sort)
 just check     # lint + test + build (read-only)
@@ -32,7 +32,7 @@ Requires Node >= 24 and pnpm 10.30.3 (`packageManager` field).
 
 `just check` is the full local gate and is read-only: it runs lint, test and build. Use `just format` to write fixes.
 
-There is no test framework. `just test` succeeds only because the `.no-tests` sentinel file exists at the repo root — deleting it makes the recipe (and CI) fail until a real test command is wired up.
+There is no test framework. `just test` succeeds only because the `.no-tests` sentinel file exists at the repo root - deleting it makes the recipe (and CI) fail until a real test command is wired up.
 
 CI (`.github/workflows/ci.yaml`, `ubuntu-24.04-arm`, Node 24) runs `just install` -> `lint` -> `test` -> `build` on pushes to `main`, all PRs, and manual dispatch. Deploys happen via Vercel's git integration, not CI.
 
@@ -44,7 +44,7 @@ Commits follow Conventional Commits (`feat:`, `fix:`, `docs:`, `build(deps):`, `
 
 **Heading IDs are produced twice and must agree.** `extractHeadings()` in `lib/posts.ts` regex-scans the raw markdown for `##`/`###` to build the TOC; `rehypeHeadingIds` in `app/blog/[slug]/page.tsx` stamps `id` onto rendered `h2`/`h3`. Both call `slugify()` from `lib/posts.ts`. Change the heading-level range or the slug algorithm in both places or TOC anchors break silently.
 
-**`lib/posts.ts`** is the only filesystem reader: `path.join(process.cwd(), 'content/posts')`, which resolves correctly because Next always runs from `site/`. It parses frontmatter with `gray-matter`, sorts date desc with title asc as tiebreak, and computes reading time at 200 wpm. It is server-only — the client component `components/table-of-contents.tsx` imports from it with `import type` only.
+**`lib/posts.ts`** is the only filesystem reader: `path.join(process.cwd(), 'content/posts')`, which resolves correctly because Next always runs from `site/`. It parses frontmatter with `gray-matter`, sorts date desc with title asc as tiebreak, and computes reading time at 200 wpm. It is server-only - the client component `components/table-of-contents.tsx` imports from it with `import type` only.
 
 **`lib/projects.ts`** is a hardcoded `Project[]` array, not content files. Adding a project means editing that array. Entries with a `repo` field get their star count fetched from the GitHub REST API at build/revalidate time (`next: { revalidate: 86400 }`); failures degrade to no star count rather than throwing.
 
@@ -52,9 +52,9 @@ Commits follow Conventional Commits (`feat:`, `fix:`, `docs:`, `build(deps):`, `
 
 **Client components** are only `components/reading-progress.tsx` and `components/table-of-contents.tsx`. Everything else is a Server Component.
 
-## pivoshenko.ui (shared package)
+## pivoshenko.ui (Shared Package)
 
-`pivoshenko.ui` is pinned by git tag in `site/package.json` (`github:pivoshenko/pivoshenko.ui#v0.9.3`). Upgrading means bumping that tag ref and reinstalling — there is no local workspace link.
+`pivoshenko.ui` is pinned by git tag in `site/package.json` (`github:pivoshenko/pivoshenko.ui#v0.9.3`). Upgrading means bumping that tag ref and reinstalling - there is no local workspace link.
 
 Almost every config file is a thin extension of it:
 
@@ -68,15 +68,15 @@ Almost every config file is a thin extension of it:
 | `app/globals.css` | `@import "pivoshenko.ui/ui/globals.css"` |
 | `app/icon.tsx`, `app/opengraph-image.tsx` | re-export/wrap the shared handlers |
 
-`app/layout.tsx` renders the entire `<html>` shell via `<SiteLayout>` from `pivoshenko.ui/next/site-layout`. That component owns the `<html>` tag, fonts, **and `<Analytics>` from `@vercel/analytics`** — do not add a second Analytics tag locally. `<SpeedInsights>` and `<ReadingProgress>` are injected through the `afterShell` / `beforeShell` props. Metadata comes from `siteMetadata({...})` with site-specific `keywords`/`authors`/`alternates` spread on top; `viewport` re-exports `siteViewport`.
+`app/layout.tsx` renders the entire `<html>` shell via `<SiteLayout>` from `pivoshenko.ui/next/site-layout`. That component owns the `<html>` tag, fonts, **and `<Analytics>` from `@vercel/analytics`** - do not add a second Analytics tag locally. `<SpeedInsights>` and `<ReadingProgress>` are injected through the `afterShell` / `beforeShell` props. Metadata comes from `siteMetadata({...})` with site-specific `keywords`/`authors`/`alternates` spread on top; `viewport` re-exports `siteViewport`.
 
-Route segment exports (`size`, `contentType`, `runtime`, `alt`) must stay as literal declarations in the route file even when the default export is re-exported — Next requires them to be statically analyzable. See `app/icon.tsx`.
+Route segment exports (`size`, `contentType`, `runtime`, `alt`) must stay as literal declarations in the route file even when the default export is re-exported - Next requires them to be statically analyzable. See `app/icon.tsx`.
 
 Site-local additions on top of the shared system are intentionally minimal: `app/globals.css` adds only `.type-post-heading` and `.type-caption`; `tailwind.config.ts` adds `@tailwindcss/typography` with a stone-based prose token override for post bodies.
 
 The theme is dark-only (no `next-themes`, no toggle). Colors come from role-based token classes (`bg-tag`, `fg-primary`, `fg-muted`, `hover-secondary`, `border-ui`, `type-meta`) backed by CSS variables in the shared package.
 
-## Content conventions
+## Content Conventions
 
 Frontmatter contract for `content/posts/<slug>.mdx` (filename is the URL slug):
 
@@ -91,14 +91,14 @@ tags: [product, ai, engineering] # lowercase kebab-case
 
 `description` and `tags` fall back to `''` / `[]` if omitted, but `title` and `date` are read unchecked and will render as `undefined`.
 
-## Dependency pinning gotchas
+## Dependency Pinning Gotchas
 
 `site/pnpm-workspace.yaml` carries advisory and version policy, not just workspace config:
 
-- `auditConfig.ignoreGhsas` suppresses **GHSA-h67p-54hq-rp68** (js-yaml). Do not "fix" it by bumping js-yaml: `>=4.2.0` drops the `safeLoad` alias that `gray-matter@4.0.3` calls, which breaks frontmatter parsing and the whole build. The advisory is unreachable since only trusted local frontmatter is parsed.
-- `overrides` force `postcss >= 8.5.10` and `sharp >= 0.35.0`.
-- `onlyBuiltDependencies` allows postinstall scripts for `@biomejs/biome` and `sharp` only.
+- `auditConfig.ignoreGhsas` suppresses **GHSA-h67p-54hq-rp68** (js-yaml). Do not "fix" it by bumping js-yaml: `>=4.2.0` drops the `safeLoad` alias that `gray-matter@4.0.3` calls, which breaks frontmatter parsing and the whole build. The advisory is unreachable since only trusted local frontmatter is parsed
+- `overrides` force `postcss >= 8.5.10` and `sharp >= 0.35.0`
+- `onlyBuiltDependencies` allows postinstall scripts for `@biomejs/biome` and `sharp` only
 
-## Code style
+## Code Style
 
-Biome, not ESLint/Prettier (rules inherited from `pivoshenko.ui/config/biome.json`): single quotes, double quotes in JSX, no semicolons, trailing commas everywhere, 2-space indent, 80-char line width, imports auto-organized, `noUnusedVariables` is an error. Tailwind utility classes only — no CSS modules or CSS-in-JS.
+Biome, not ESLint/Prettier (rules inherited from `pivoshenko.ui/config/biome.json`): single quotes, double quotes in JSX, no semicolons, trailing commas everywhere, 2-space indent, 80-char line width, imports auto-organized, `noUnusedVariables` is an error. Tailwind utility classes only - no CSS modules or CSS-in-JS.
