@@ -13,7 +13,7 @@ export const metadata = {
     url: 'https://pivoshenko.dev',
     brand: 'pivoshenko.dev',
     title: 'Volodymyr Pivoshenko',
-    titleTemplate: '%s — Volodymyr Pivoshenko',
+    titleTemplate: '%s - Volodymyr Pivoshenko',
     description: 'Tech blog',
   }),
   keywords: [
