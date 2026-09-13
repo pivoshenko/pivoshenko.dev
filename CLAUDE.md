@@ -18,24 +18,23 @@ Everything goes through the root `justfile`, which shells out to `pnpm -C site .
 
 ```bash
 just install   # pnpm install
-just dev       # next dev --turbopack
+just run-dev-server       # next dev --turbopack
 just build     # next build (this is also the typecheck — no separate tsc script)
 just lint      # biome lint .
-just format    # biome format . --write
-just check     # biome check . --write (auto-fixes!) + next build
-just audit     # pnpm audit
+just format    # biome check . --write (format + lint autofix + import sort)
+just check     # lint + test + build (read-only)
 just update    # pnpm update
-just start     # next build + next start
+just run-prod-server     # next build + next start
 just test      # no-op while .no-tests exists
 ```
 
 Requires Node >= 24 and pnpm 10.30.3 (`packageManager` field).
 
-`just check` is the full local gate. Note it writes fixes to your working tree; use `just lint` for a read-only check.
+`just check` is the full local gate and is read-only: it runs lint, test and build. Use `just format` to write fixes.
 
 There is no test framework. `just test` succeeds only because the `.no-tests` sentinel file exists at the repo root — deleting it makes the recipe (and CI) fail until a real test command is wired up.
 
-CI (`.github/workflows/ci.yaml`, `ubuntu-24.04-arm`, Node 24) runs `just install` -> `lint` -> `audit` -> `test` -> `build` on pushes to `main`, all PRs, and manual dispatch. Deploys happen via Vercel's git integration, not CI.
+CI (`.github/workflows/ci.yaml`, `ubuntu-24.04-arm`, Node 24) runs `just install` -> `lint` -> `test` -> `build` on pushes to `main`, all PRs, and manual dispatch. Deploys happen via Vercel's git integration, not CI.
 
 Commits follow Conventional Commits (`feat:`, `fix:`, `docs:`, `build(deps):`, `ci:`, `chore:`). PRs use `.github/PULL_REQUEST_TEMPLATE.md`.
 
@@ -94,7 +93,7 @@ tags: [product, ai, engineering] # lowercase kebab-case
 
 ## Dependency pinning gotchas
 
-`site/pnpm-workspace.yaml` carries audit and version policy, not just workspace config:
+`site/pnpm-workspace.yaml` carries advisory and version policy, not just workspace config:
 
 - `auditConfig.ignoreGhsas` suppresses **GHSA-h67p-54hq-rp68** (js-yaml). Do not "fix" it by bumping js-yaml: `>=4.2.0` drops the `safeLoad` alias that `gray-matter@4.0.3` calls, which breaks frontmatter parsing and the whole build. The advisory is unreachable since only trusted local frontmatter is parsed.
 - `overrides` force `postcss >= 8.5.10` and `sharp >= 0.35.0`.
