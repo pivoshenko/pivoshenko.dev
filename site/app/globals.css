@@ -1,11 +1,1 @@
 @import "pivoshenko.ui/ui/globals.css";
-
-@layer components {
-  .type-post-heading {
-    @apply text-xl font-semibold leading-snug;
-  }
-
-  .type-caption {
-    @apply text-xs leading-relaxed;
-  }
-}

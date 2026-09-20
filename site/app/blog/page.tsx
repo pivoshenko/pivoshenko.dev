@@ -1,7 +1,7 @@
+import { PostList } from '@/components/post-list'
 import { getAllPosts } from '@/lib/posts'
 import type { Metadata } from 'next'
-import Link from 'next/link'
-import { SectionHeader } from 'pivoshenko.ui'
+import { HeroBand, PageBody, SectionHeader } from 'pivoshenko.ui'
 
 export const metadata: Metadata = {
   title: 'Blog',
@@ -20,59 +20,17 @@ export default function Blog() {
   const years = Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a))
 
   return (
-    <div className="space-y-12">
-      <div>
-        <h1 className="type-heading fg-primary">Posts</h1>
-        <p className="mt-1 type-meta fg-muted">
-          {posts.length} {posts.length === 1 ? 'post' : 'posts'}
-        </p>
-      </div>
+    <>
+      <HeroBand field="ascii" title={<span className="fg-title">Posts</span>} />
 
-      {years.map((year) => (
-        <section key={year} className="space-y-5">
-          <SectionHeader title={year} count={postsByYear[year].length} />
-
-          <div className="space-y-6">
-            {postsByYear[year].map((post) => (
-              <article key={post.slug}>
-                <div className="flex items-start gap-5">
-                  <span className="type-meta fg-muted w-12 shrink-0 mt-px tabular-nums">
-                    {new Date(post.date).toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                    })}
-                  </span>
-                  <div className="space-y-1.5 min-w-0">
-                    <Link href={`/blog/${post.slug}`} className="group block">
-                      <h3 className="type-ui fg-title group-hover:underline underline-offset-2 deco-subtle">
-                        {post.title}
-                      </h3>
-                      {post.description && (
-                        <p className="type-caption fg-subtle mt-0.5">
-                          {post.description}
-                        </p>
-                      )}
-                    </Link>
-                    {post.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1">
-                        {post.tags.map((tag) => (
-                          <Link
-                            key={tag}
-                            href={`/blog/tags/${encodeURIComponent(tag)}`}
-                            className="inline-flex items-center font-mono text-xs px-1.5 py-0.5 rounded transition-colors bg-tag fg-muted hover-secondary"
-                          >
-                            {tag}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-      ))}
-    </div>
+      <PageBody className="space-y-12">
+        {years.map((year) => (
+          <section key={year} className="space-y-2">
+            <SectionHeader title={year} count={postsByYear[year].length} />
+            <PostList posts={postsByYear[year]} />
+          </section>
+        ))}
+      </PageBody>
+    </>
   )
 }

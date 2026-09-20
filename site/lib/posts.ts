@@ -75,6 +75,14 @@ export function getPostsByTag(tag: string): PostMeta[] {
   return getAllPosts().filter((post) => post.tags.includes(tag))
 }
 
+export function getAllPostTags(): string[] {
+  const tags = new Set<string>()
+  for (const post of getAllPosts()) {
+    for (const tag of post.tags) tags.add(tag)
+  }
+  return [...tags].sort()
+}
+
 export function formatDate(dateString: string): string {
   return new Date(dateString).toLocaleDateString('en-US', {
     year: 'numeric',

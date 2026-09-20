@@ -1,4 +1,3 @@
-import { TableOfContents } from '@/components/table-of-contents'
 import {
   extractHeadings,
   formatDate,
@@ -10,10 +9,19 @@ import {
 } from '@/lib/posts'
 import { evaluate } from '@mdx-js/mdx'
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import {
+  HeroBand,
+  PageBody,
+  Prose,
+  TableOfContents,
+  type TocItem,
+} from 'pivoshenko.ui'
 import * as runtime from 'react/jsx-runtime'
 import remarkGfm from 'remark-gfm'
+
+// a post with only a heading or two does not earn a table of contents
+const TOC_MIN = 3
 
 function rehypeHeadingIds() {
   return (tree: { children: unknown[] }) => {
@@ -77,7 +85,11 @@ export default async function BlogPost({ params }: Props) {
 
   if (!post || rawContent === null) notFound()
 
-  const headings = extractHeadings(rawContent)
+  const toc: TocItem[] = extractHeadings(rawContent).map((heading) => ({
+    id: heading.id,
+    label: heading.text,
+    level: heading.level === 3 ? 3 : 2,
+  }))
 
   const { default: MDXContent } = await evaluate(rawContent, {
     ...(runtime as Parameters<typeof evaluate>[1]),
@@ -85,47 +97,46 @@ export default async function BlogPost({ params }: Props) {
     rehypePlugins: [rehypeHeadingIds],
   })
 
+  const showToc = toc.length >= TOC_MIN
+
   return (
     <>
-      <TableOfContents headings={headings} />
-      <article className="space-y-10">
-        <header className="space-y-4">
-          <Link
-            href="/blog"
-            className="inline-block type-meta fg-muted hover-secondary transition-colors"
-          >
-            ← Blog
-          </Link>
-
-          <h1 className="type-post-heading fg-primary">{post.title}</h1>
-
-          <div className="flex items-center gap-2 type-meta fg-muted">
-            <time dateTime={post.date}>{formatDate(post.date)}</time>
-            <span aria-hidden>·</span>
-            <span>{readingTime(rawContent)}</span>
-          </div>
-
-          {post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5">
-              {post.tags.map((tag) => (
-                <Link
-                  key={tag}
-                  href={`/blog/tags/${encodeURIComponent(tag)}`}
-                  className="inline-flex items-center font-mono text-xs px-1.5 py-0.5 rounded transition-colors bg-tag fg-muted hover-secondary"
-                >
-                  {tag}
-                </Link>
-              ))}
-            </div>
-          )}
-        </header>
-
-        <hr className="border-ui" />
-
-        <div className="prose prose-invert prose-sm max-w-none">
-          <MDXContent />
+      <HeroBand
+        field="ascii"
+        title={<span className="fg-title">{post.title}</span>}
+        lead={post.description || undefined}
+      >
+        <div className="mt-4 flex flex-wrap items-center gap-2 type-meta fg-muted">
+          <time dateTime={post.date}>{formatDate(post.date)}</time>
+          <span aria-hidden="true">·</span>
+          <span>{readingTime(rawContent)}</span>
         </div>
-      </article>
+      </HeroBand>
+
+      <PageBody>
+        {/* the rail column is only declared when a TOC actually fills it,
+            otherwise a post with too few headings renders against 14rem of
+            nothing and its measure sits off to the left */}
+        <div
+          className={
+            showToc
+              ? 'grid gap-10 lg:grid-cols-[minmax(0,76ch)_14rem] lg:justify-center'
+              : ''
+          }
+        >
+          <article>
+            <Prose className="mx-auto">
+              <MDXContent />
+            </Prose>
+          </article>
+
+          {showToc && (
+            <aside className="hidden lg:block">
+              <TableOfContents items={toc} sticky />
+            </aside>
+          )}
+        </div>
+      </PageBody>
     </>
   )
 }
