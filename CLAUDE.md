@@ -17,7 +17,15 @@
 
 Nearly every shared concern comes from this external package: the Biome config, the TypeScript base config, the Tailwind preset, `globals.css`, the React component library, and the Next.js `SiteLayout` / `siteMetadata` / OG-image / icon helpers. Consequence: `site/biome.json` and `site/postcss.config.mjs` are one-to-four line files that extend or re-export it, `site/tsconfig.json` adds only Next-specific bits on top of the package base, `app/icon.tsx` and `app/opengraph-image.tsx` are thin re-exports, and `app/layout.tsx` only composes `SiteLayout` - site-wide chrome (html element, fonts, nav, footer, page shell, analytics) lives in the package, not here.
 
-Read the resolved package under `site/node_modules/pivoshenko.ui/` when you need to know what a class or export actually does. `site/components/` holds only the components genuinely local to this site.
+Read the resolved package under `site/node_modules/pivoshenko.ui/` when you need to know what a class or export actually does. `site/components/` holds only the components genuinely local to this site: `post-list.tsx` and `project-list.tsx` wrap the package `List` / `Row` for the two row shapes this site repeats, and `reading-progress.tsx` is mounted from `layout.tsx`.
+
+### Page Composition
+
+`PageShell` renders `<main>` with no width of its own, so a page alternates full-bleed bands with constrained ones. **Every route's constrained content must be wrapped in `PageBody`** - including `/about`. Forget it and the page renders edge to edge, which no typecheck will catch.
+
+The decorative field is **two** choices, not one, despite what the package README implies. `field` on `SiteLayout` reaches only the footer, because `Hero` / `HeroBand` are rendered by the page rather than by `PageShell` and default to `contours` on their own. So every `HeroBand` repeats `field="ascii"`, the same way the sibling sites repeat theirs. Change one and change all of them.
+
+This site is monochrome: `accent="text"` in `layout.tsx` points the live `--accent` variable at the near-white palette slot, so every `accent` utility - headings, links, stats, the lit cells of the field - resolves to white on the warm off-black canvas. Pick the accent there and nowhere else.
 
 ## Content Pipeline
 
@@ -33,6 +41,8 @@ MDX is **not** rendered through the Next MDX loader. `site/app/blog/[slug]/page.
 - `@next/mdx` and `@mdx-js/loader` are dependencies but `next.config.ts` never wraps the config with `createMDX`, so `.mdx` files placed as routes are not compiled by the loader path
 - heading IDs come from two places - `slugify` in `lib/posts.ts` for the TOC list, `rehypeHeadingIds` for the rendered anchors. Both call the same `slugify`, so keep it that way; changing one side silently breaks every in-page anchor
 
+The table of contents consuming those IDs is the package `TableOfContents`, in a sticky right rail that the post page hides below `lg`.
+
 ### Projects
 
 `site/lib/projects.ts` holds projects as a hardcoded array in the source file, not as content files - adding one means editing that array. It fetches star counts from the GitHub API unauthenticated and degrades to `undefined` on any failure, so missing stars in a local build is rate limiting, not a bug: do not chase it and do not add a token.
@@ -41,7 +51,7 @@ MDX is **not** rendered through the Next MDX loader. `site/app/blog/[slug]/page.
 
 `site/app/**` is otherwise self-describing, with two exceptions:
 
-- `/about` is not linked from the nav and is intentionally empty - do not "fix" it
+- `/about` is not linked from the nav and carries no body copy, deliberately - it renders a heading and two external links and nothing else. Do not "fix" it
 - `/rss.xml` is a route handler emitting hand-rolled XML with its own `escapeXml`
 
 ## Commands
@@ -55,5 +65,6 @@ MDX is **not** rendered through the Next MDX loader. `site/app/blog/[slug]/page.
 ## Misc
 
 - there are no environment variables - nothing reads `process.env`, and there is no `.env` or `.env.example`. If something looks unconfigured, that is not what is missing
+- `site/next.config.ts` sets `agentRules: false`. Without it `next dev` writes its own `site/CLAUDE.md` and `site/AGENTS.md` on every run, which shadow the single pair at the repo root
 - `site/vercel.json` installs with `--frozen-lockfile`, so `site/pnpm-lock.yaml` must be committed with any dependency change
 - commit, branch, and pull request conventions are in `CONTRIBUTING.md`
