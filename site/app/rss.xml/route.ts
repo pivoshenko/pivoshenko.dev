@@ -1,5 +1,9 @@
 import { getAllPosts } from '@/lib/posts'
 
+// the feed is built from the post files alone, so it prerenders with the rest
+// of the site rather than rendering per request
+export const dynamic = 'force-static'
+
 const SITE_URL = 'https://pivoshenko.dev'
 const AUTHOR = 'Volodymyr Pivoshenko'
 

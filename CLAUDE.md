@@ -23,9 +23,9 @@ Read the resolved package under `site/node_modules/pivoshenko.ui/` when you need
 
 `PageShell` renders `<main>` with no width of its own, so a page alternates full-bleed bands with constrained ones. **Every route's constrained content must be wrapped in `PageBody`** - including `/about`. Forget it and the page renders edge to edge, which no typecheck will catch.
 
-The decorative field is **two** choices, not one, despite what the package README implies. `field` on `SiteLayout` reaches only the footer, because `Hero` / `HeroBand` are rendered by the page rather than by `PageShell` and default to `contours` on their own. So every `HeroBand` repeats `field="ascii"`, the same way the sibling sites repeat theirs. Change one and change all of them.
+The decorative field is **two** choices, not one, despite what the package README implies. `field` on `SiteLayout` reaches only the footer, because `Hero` / `HeroBand` are rendered by the page rather than by `PageShell` and default to `contours` on their own. The hero half is pinned once in `site/components/site-hero.tsx`: every page renders `SiteHero`, never `HeroBand` directly, and its props type omits `field` so a page cannot drift from the footer. Change the field there and in `layout.tsx`.
 
-This site is monochrome: `accent="text"` in `layout.tsx` points the live `--accent` variable at the near-white palette slot, so every `accent` utility - headings, links, stats, the lit cells of the field - resolves to white on the warm off-black canvas. Pick the accent there and nowhere else.
+`layout.tsx` picks both accents and nothing else should. `accent="blue"` drives the live `--accent` that every `accent` utility resolves to - headings, links, stats, the lit cells of the field. `subAccent="lavender"` drives `--accent-info`, one rank down, which `SubHeader`, info `Tag`s, `StatusBadge` and `Callout` take. Only the 14 chromatic palette slots are valid for either; the neutrals (`text`, `crust`, ...) have no `[data-accent]` rule, and passing one used to fall back to blue silently.
 
 ## Content Pipeline
 
@@ -52,7 +52,7 @@ The table of contents consuming those IDs is the package `TableOfContents`, in a
 `site/app/**` is otherwise self-describing, with two exceptions:
 
 - `/about` is not linked from the nav and carries no body copy, deliberately - it renders a heading and two external links and nothing else. Do not "fix" it
-- `/rss.xml` is a route handler emitting hand-rolled XML with its own `escapeXml`
+- `/rss.xml` is a route handler emitting hand-rolled XML with its own `escapeXml`. It sets `dynamic = 'force-static'`, because a Route Handler renders per request by default and this one reads only the post files
 
 ## Commands
 
@@ -65,6 +65,6 @@ The table of contents consuming those IDs is the package `TableOfContents`, in a
 ## Misc
 
 - there are no environment variables - nothing reads `process.env`, and there is no `.env` or `.env.example`. If something looks unconfigured, that is not what is missing
-- `site/next.config.ts` sets `agentRules: false`. Without it `next dev` writes its own `site/CLAUDE.md` and `site/AGENTS.md` on every run, which shadow the single pair at the repo root
+- `agentRules: false` comes from `baseNextConfig` in `pivoshenko.ui`, not from `site/next.config.ts`. Without it `next dev` writes its own `site/CLAUDE.md` and `site/AGENTS.md` on every run, which shadow the single pair at the repo root
 - `site/vercel.json` installs with `--frozen-lockfile`, so `site/pnpm-lock.yaml` must be committed with any dependency change
 - commit, branch, and pull request conventions are in `CONTRIBUTING.md`

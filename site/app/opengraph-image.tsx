@@ -1,14 +1,14 @@
 import { createOgImage } from 'pivoshenko.ui/next/opengraph-image'
 
-export const alt = 'Volodymyr Pivoshenko'
+export const alt = 'pivoshenko.dev'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
-export const runtime = 'edge'
 
 export default createOgImage({
-  brand: 'pivoshenko.dev',
-  title: 'Volodymyr Pivoshenko',
-  subtitle: 'Tech blog',
+  brand: 'Volodymyr Pivoshenko',
+  title: 'Blog',
+  subtitle:
+    'Notes on software engineering, distributed systems and developer tooling',
   domain: 'pivoshenko.dev',
-  accent: 'lavender',
+  accent: 'blue',
 })

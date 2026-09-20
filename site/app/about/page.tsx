@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { PageBody } from 'pivoshenko.ui'
+import { ArrowLink, PageBody } from 'pivoshenko.ui'
 
 export const metadata: Metadata = {
   title: 'About',
@@ -25,14 +25,14 @@ export default function About() {
         <div className="space-y-2">
           {links.map((link) => (
             <div key={link.label}>
-              <a
+              <ArrowLink
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="type-ui fg-secondary hover:underline underline-offset-2 deco-subtle"
+                external
               >
-                {link.label} ↗
-              </a>
+                {link.label}
+              </ArrowLink>
             </div>
           ))}
         </div>
