@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { PageBody } from 'pivoshenko.ui'
 
 export const metadata: Metadata = {
   title: 'About',
@@ -12,7 +13,7 @@ const links = [
 
 export default function About() {
   return (
-    <div className="space-y-4">
+    <PageBody className="space-y-4">
       <div>
         <h1 className="type-heading fg-primary">About</h1>
       </div>
@@ -36,6 +37,6 @@ export default function About() {
           ))}
         </div>
       </div>
-    </div>
+    </PageBody>
   )
 }

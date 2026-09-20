@@ -10,4 +10,5 @@ export default createOgImage({
   title: 'Volodymyr Pivoshenko',
   subtitle: 'Tech blog',
   domain: 'pivoshenko.dev',
+  accent: 'lavender',
 })

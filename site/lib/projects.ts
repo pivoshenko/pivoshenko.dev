@@ -1,9 +1,8 @@
 import type { LucideIcon } from 'lucide-react'
 import {
+  ArrowLeftRight,
   ArrowUpCircle,
-  Bot,
   LayoutGrid,
-  Palette,
   Plug,
   Terminal,
 } from 'lucide-react'
@@ -36,23 +35,15 @@ const projects: Project[] = [
     repo: 'pivoshenko/kasetto',
   },
   {
-    slug: 'pivoshenko-ai',
-    title: 'pivoshenko.ai',
-    date: '2026-03-01',
-    description: 'Agents workspace: skills, MCPs, and catalog site.',
-    url: 'https://ai.pivoshenko.dev',
-    icon: Bot,
-    tags: ['ai', 'agents', 'skills', 'mcps', 'claude-code'],
-  },
-  {
-    slug: 'morok',
-    title: 'Morok, Popil & Vatra',
-    date: '2026-03-01',
+    slug: 'steamify',
+    title: 'Steamify',
+    date: '2025-10-28',
     description:
-      'Three-flavor brand theme (pitch black, warm ash, gruvbox-warm) focused on minimalism, simplicity, and cross-tool consistency (20+ ports).',
-    url: 'https://theme.pivoshenko.dev',
-    icon: Palette,
-    tags: ['theme', 'design-system'],
+      'Zero-dependency library for converting Markdown into Steam-compatible markup, and back again.',
+    url: 'https://github.com/pivoshenko/steamify',
+    icon: ArrowLeftRight,
+    tags: ['python', 'markdown', 'steam'],
+    repo: 'pivoshenko/steamify',
   },
   {
     slug: 'uv-upsync',

@@ -1,8 +1,8 @@
-import { getAllPosts, getPostsByTag } from '@/lib/posts'
+import { PostList } from '@/components/post-list'
+import { getAllPostTags, getAllPosts, getPostsByTag } from '@/lib/posts'
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { Tag } from 'pivoshenko.ui'
+import { Breadcrumb, HeroBand, PageBody, Tag, Tags } from 'pivoshenko.ui'
 
 interface Props {
   params: Promise<{ tag: string }>
@@ -30,60 +30,39 @@ export default async function TagPage({ params }: Props) {
 
   if (posts.length === 0) notFound()
 
-  return (
-    <div className="space-y-10">
-      <div>
-        <Link
-          href="/blog"
-          className="inline-block type-meta fg-muted hover-secondary transition-colors"
-        >
-          ← Blog
-        </Link>
-        <h1 className="mt-4 type-heading fg-primary">#{decoded}</h1>
-        <p className="mt-1 type-meta fg-muted">
-          {posts.length} {posts.length === 1 ? 'post' : 'posts'}
-        </p>
-      </div>
+  const tags = getAllPostTags()
 
-      <div className="space-y-6">
-        {posts.map((post) => (
-          <article key={post.slug}>
-            <div className="flex items-start gap-5">
-              <span className="type-meta fg-muted w-12 shrink-0 mt-px tabular-nums">
-                {new Date(post.date).toLocaleDateString('en-US', {
-                  month: 'short',
-                  day: 'numeric',
-                })}
-              </span>
-              <div className="space-y-1.5 min-w-0">
-                <Link href={`/blog/${post.slug}`} className="group block">
-                  <h3 className="type-ui fg-title group-hover:underline underline-offset-2 deco-subtle">
-                    {post.title}
-                  </h3>
-                  {post.description && (
-                    <p className="type-caption fg-subtle mt-0.5">
-                      {post.description}
-                    </p>
-                  )}
-                </Link>
-                {post.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1">
-                    {post.tags.map((t) => (
-                      <Link
-                        key={t}
-                        href={`/blog/tags/${encodeURIComponent(t)}`}
-                        className="hover-secondary transition-colors"
-                      >
-                        <Tag active={t === decoded}>{t}</Tag>
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
+  return (
+    <>
+      <HeroBand
+        field="ascii"
+        title={<span className="fg-title">#{decoded}</span>}
+        counters={[
+          {
+            label: posts.length === 1 ? 'post' : 'posts',
+            value: posts.length,
+          },
+        ]}
+      >
+        <Tags className="mt-6">
+          {tags.map((t) => (
+            <Tag
+              key={t}
+              href={`/blog/tags/${encodeURIComponent(t)}`}
+              active={t === decoded}
+            >
+              {t}
+            </Tag>
+          ))}
+        </Tags>
+      </HeroBand>
+
+      <PageBody className="space-y-6">
+        <Breadcrumb
+          items={[{ label: 'Blog', href: '/blog' }, { label: `#${decoded}` }]}
+        />
+        <PostList posts={posts} />
+      </PageBody>
+    </>
   )
 }

@@ -44,10 +44,13 @@ export default function RootLayout({
   return (
     <SiteLayout
       brand="pivoshenko.dev"
+      accent="text"
+      field="ascii"
       navLinks={[
         { href: '/', label: 'Home' },
         { href: '/blog', label: 'Blog' },
         { href: '/projects', label: 'Projects' },
+        { href: '/sites', label: 'Sites' },
       ]}
       footerExtras={[rssLink]}
       beforeShell={<ReadingProgress />}
