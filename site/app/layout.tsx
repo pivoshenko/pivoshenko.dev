@@ -44,7 +44,8 @@ export default function RootLayout({
   return (
     <SiteLayout
       brand="pivoshenko.dev"
-      accent="text"
+      accent="blue"
+      subAccent="lavender"
       field="ascii"
       navLinks={[
         { href: '/', label: 'Home' },
@@ -53,6 +54,7 @@ export default function RootLayout({
         { href: '/sites', label: 'Sites' },
       ]}
       footerExtras={[rssLink]}
+      footerWebsite={false}
       beforeShell={<ReadingProgress />}
       afterShell={<SpeedInsights />}
     >

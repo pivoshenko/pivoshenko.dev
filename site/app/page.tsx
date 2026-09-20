@@ -1,17 +1,17 @@
 import { PostList } from '@/components/post-list'
 import { ProjectList } from '@/components/project-list'
+import { SiteHero } from '@/components/site-hero'
 import { getAllPosts } from '@/lib/posts'
-import { getAllProjectsWithStars } from '@/lib/projects'
-import { ArrowLink, HeroBand, PageBody, SectionHeader } from 'pivoshenko.ui'
+import { getAllProjects, withStars } from '@/lib/projects'
+import { ArrowLink, PageBody, SectionHeader } from 'pivoshenko.ui'
 
 export default async function Home() {
   const posts = getAllPosts().slice(0, 5)
-  const projects = (await getAllProjectsWithStars()).slice(0, 1)
+  const projects = await withStars(getAllProjects().slice(0, 1))
 
   return (
     <>
-      <HeroBand
-        field="ascii"
+      <SiteHero
         title={
           <>
             <span className="fg-title">Volodymyr </span>
@@ -37,7 +37,7 @@ export default async function Home() {
             Outside of work, I enjoy cycling and playing video games to unwind.
           </p>
         </div>
-      </HeroBand>
+      </SiteHero>
 
       <PageBody className="space-y-12">
         <section className="space-y-2">

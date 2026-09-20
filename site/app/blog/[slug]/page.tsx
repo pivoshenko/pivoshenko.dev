@@ -1,3 +1,4 @@
+import { SiteHero } from '@/components/site-hero'
 import {
   extractHeadings,
   formatDate,
@@ -10,13 +11,7 @@ import {
 import { evaluate } from '@mdx-js/mdx'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import {
-  HeroBand,
-  PageBody,
-  Prose,
-  TableOfContents,
-  type TocItem,
-} from 'pivoshenko.ui'
+import { PageBody, Prose, TableOfContents, type TocItem } from 'pivoshenko.ui'
 import * as runtime from 'react/jsx-runtime'
 import remarkGfm from 'remark-gfm'
 
@@ -101,8 +96,7 @@ export default async function BlogPost({ params }: Props) {
 
   return (
     <>
-      <HeroBand
-        field="ascii"
+      <SiteHero
         title={<span className="fg-title">{post.title}</span>}
         lead={post.description || undefined}
       >
@@ -111,7 +105,7 @@ export default async function BlogPost({ params }: Props) {
           <span aria-hidden="true">·</span>
           <span>{readingTime(rawContent)}</span>
         </div>
-      </HeroBand>
+      </SiteHero>
 
       <PageBody>
         {/* the rail column is only declared when a TOC actually fills it,

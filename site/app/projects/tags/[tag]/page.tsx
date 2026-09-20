@@ -1,8 +1,9 @@
 import { ProjectList } from '@/components/project-list'
+import { SiteHero } from '@/components/site-hero'
 import { getAllProjectTags, getProjectsByTag } from '@/lib/projects'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { Breadcrumb, HeroBand, PageBody, Tag, Tags } from 'pivoshenko.ui'
+import { Breadcrumb, PageBody, Tag, Tags } from 'pivoshenko.ui'
 
 interface Props {
   params: Promise<{ tag: string }>
@@ -32,8 +33,7 @@ export default async function ProjectTagPage({ params }: Props) {
 
   return (
     <>
-      <HeroBand
-        field="ascii"
+      <SiteHero
         title={<span className="fg-title">#{decoded}</span>}
         counters={[
           {
@@ -53,7 +53,7 @@ export default async function ProjectTagPage({ params }: Props) {
             </Tag>
           ))}
         </Tags>
-      </HeroBand>
+      </SiteHero>
 
       <PageBody className="space-y-6">
         <Breadcrumb

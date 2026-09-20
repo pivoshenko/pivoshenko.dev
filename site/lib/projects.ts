@@ -96,14 +96,20 @@ async function fetchStars(repo: string): Promise<number | undefined> {
   }
 }
 
-export async function getAllProjectsWithStars(): Promise<ProjectWithStars[]> {
+// takes the slice it is given rather than the whole list: each repo costs a
+// GitHub round trip, and the homepage only shows one project
+export async function withStars(list: Project[]): Promise<ProjectWithStars[]> {
   return Promise.all(
-    getAllProjects().map(async (project) =>
+    list.map(async (project) =>
       project.repo
         ? { ...project, stars: await fetchStars(project.repo) }
         : project,
     ),
   )
+}
+
+export async function getAllProjectsWithStars(): Promise<ProjectWithStars[]> {
+  return withStars(getAllProjects())
 }
 
 export function getAllProjects(): Project[] {

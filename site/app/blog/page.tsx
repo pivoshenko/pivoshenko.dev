@@ -1,7 +1,8 @@
 import { PostList } from '@/components/post-list'
+import { SiteHero } from '@/components/site-hero'
 import { getAllPosts } from '@/lib/posts'
 import type { Metadata } from 'next'
-import { HeroBand, PageBody, SectionHeader } from 'pivoshenko.ui'
+import { PageBody, SectionHeader } from 'pivoshenko.ui'
 
 export const metadata: Metadata = {
   title: 'Blog',
@@ -21,7 +22,7 @@ export default function Blog() {
 
   return (
     <>
-      <HeroBand field="ascii" title={<span className="fg-title">Posts</span>} />
+      <SiteHero title={<span className="fg-title">Posts</span>} />
 
       <PageBody className="space-y-12">
         {years.map((year) => (

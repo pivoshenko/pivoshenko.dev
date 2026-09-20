@@ -1,7 +1,8 @@
 import { ProjectList } from '@/components/project-list'
+import { SiteHero } from '@/components/site-hero'
 import { getAllProjectsWithStars } from '@/lib/projects'
 import type { Metadata } from 'next'
-import { HeroBand, PageBody, SectionHeader } from 'pivoshenko.ui'
+import { PageBody, SectionHeader } from 'pivoshenko.ui'
 
 export const metadata: Metadata = {
   title: 'Projects',
@@ -23,10 +24,7 @@ export default async function Projects() {
 
   return (
     <>
-      <HeroBand
-        field="ascii"
-        title={<span className="fg-title">Projects</span>}
-      />
+      <SiteHero title={<span className="fg-title">Projects</span>} />
 
       <PageBody className="space-y-12">
         {years.map((year) => (
