@@ -3,16 +3,35 @@ import { ProjectList } from '@/components/project-list'
 import { SiteHero } from '@/components/site-hero'
 import { getAllPosts } from '@/lib/posts'
 import { getAllProjects, withStars } from '@/lib/projects'
-import { ArrowLink, PageBody, SectionHeader } from 'pivoshenko.ui'
+import { Mail } from 'lucide-react'
+import {
+  ArrowLink,
+  GitHubMark,
+  IconLink,
+  LinkedInMark,
+  PageBody,
+  SectionHeader,
+} from 'pivoshenko.ui'
 
 const links = [
-  { label: 'GitHub', href: 'https://github.com/pivoshenko', blank: true },
+  {
+    label: 'GitHub',
+    href: 'https://github.com/pivoshenko',
+    blank: true,
+    icon: <GitHubMark />,
+  },
   {
     label: 'LinkedIn',
     href: 'https://linkedin.com/in/pivoshenko',
     blank: true,
+    icon: <LinkedInMark />,
   },
-  { label: 'Email', href: 'mailto:contact@pivoshenko.dev', blank: false },
+  {
+    label: 'Email',
+    href: 'mailto:contact@pivoshenko.dev',
+    blank: false,
+    icon: <Mail className="w-4 h-4" strokeWidth={2} aria-hidden="true" />,
+  },
 ]
 
 export default async function Home() {
@@ -48,19 +67,20 @@ export default async function Home() {
           </p>
         </div>
 
-        <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
+        <div className="mt-6 flex flex-wrap items-center gap-2">
           {links.map((link) => (
-            <ArrowLink
+            <IconLink
               key={link.label}
               href={link.href}
-              external
+              aria-label={link.label}
+              title={link.label}
               {...(link.blank && {
                 target: '_blank',
                 rel: 'noopener noreferrer',
               })}
             >
-              {link.label}
-            </ArrowLink>
+              {link.icon}
+            </IconLink>
           ))}
         </div>
       </SiteHero>
