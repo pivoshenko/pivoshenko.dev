@@ -7,7 +7,6 @@ import { Mail } from 'lucide-react'
 import {
   ArrowLink,
   GitHubMark,
-  IconLink,
   LinkedInMark,
   PageBody,
   SectionHeader,
@@ -67,9 +66,9 @@ export default async function Home() {
           </p>
         </div>
 
-        <div className="mt-6 flex flex-wrap items-center gap-2">
+        <div className="mt-6 -ml-2 flex flex-wrap items-center gap-2">
           {links.map((link) => (
-            <IconLink
+            <a
               key={link.label}
               href={link.href}
               aria-label={link.label}
@@ -78,9 +77,10 @@ export default async function Home() {
                 target: '_blank',
                 rel: 'noopener noreferrer',
               })}
+              className="inline-flex items-center justify-center rounded-md p-2 fg-subtle hover-primary transition-colors duration-fast focus-ring"
             >
               {link.icon}
-            </IconLink>
+            </a>
           ))}
         </div>
       </SiteHero>
