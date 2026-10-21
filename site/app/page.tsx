@@ -5,6 +5,16 @@ import { getAllPosts } from '@/lib/posts'
 import { getAllProjects, withStars } from '@/lib/projects'
 import { ArrowLink, PageBody, SectionHeader } from 'pivoshenko.ui'
 
+const links = [
+  { label: 'GitHub', href: 'https://github.com/pivoshenko', blank: true },
+  {
+    label: 'LinkedIn',
+    href: 'https://linkedin.com/in/pivoshenko',
+    blank: true,
+  },
+  { label: 'Email', href: 'mailto:contact@pivoshenko.dev', blank: false },
+]
+
 export default async function Home() {
   const posts = getAllPosts().slice(0, 5)
   const projects = await withStars(getAllProjects().slice(0, 1))
@@ -36,6 +46,22 @@ export default async function Home() {
           <p>
             Outside of work, I enjoy cycling and playing video games to unwind.
           </p>
+        </div>
+
+        <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
+          {links.map((link) => (
+            <ArrowLink
+              key={link.label}
+              href={link.href}
+              external
+              {...(link.blank && {
+                target: '_blank',
+                rel: 'noopener noreferrer',
+              })}
+            >
+              {link.label}
+            </ArrowLink>
+          ))}
         </div>
       </SiteHero>
 

@@ -51,7 +51,7 @@ The table of contents consuming those IDs is the package `TableOfContents`, in a
 
 `site/app/**` is otherwise self-describing, with two exceptions:
 
-- `/about` is not linked from the nav and carries no body copy, deliberately - it renders a heading and two external links and nothing else. Do not "fix" it
+- `/about` is not linked from the nav and carries no body copy, deliberately - it renders a heading and two external links and nothing else. Do not "fix" it. The homepage hero carries the same links, so the duplication is intentional rather than something to dedupe
 - `/rss.xml` is a route handler emitting hand-rolled XML with its own `escapeXml`. It sets `dynamic = 'force-static'`, because a Route Handler renders per request by default and this one reads only the post files
 
 ## Commands
