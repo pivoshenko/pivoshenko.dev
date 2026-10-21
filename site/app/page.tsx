@@ -18,14 +18,14 @@ export default async function Home() {
             <span className="text-lavender">Pivoshenko</span>
           </>
         }
-        lead="Principal AI/ML R&D Engineer fascinated by AI, system design, and software development."
+        lead="Principal AI/ML R&D Engineer fascinated by system design and software development."
       >
         <div className="type-body fg-body mt-4 space-y-3">
           <p>
-            In my current role, I lead the R&D team and work hands-on with
-            architecture and implementation. I help turn rough ideas into
-            working solutions and keep engineering decisions practical and
-            scalable.
+            In my current role, I own the architecture of the AI/ML platform and
+            lead an R&D team, working hands-on with design and implementation. I
+            help turn rough ideas into working solutions and keep engineering
+            decisions practical and scalable.
           </p>
           <p>
             In my spare time, I build side projects and contribute to open
